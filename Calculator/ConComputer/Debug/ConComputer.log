@@ -1,2 +1,3 @@
 ﻿  ConComputer.c
+c:\users\lenovo\source\repos\concomputer\concomputer\concomputer.c(253): warning C4101: “csbi”: 未引用的局部变量
   ConComputer.vcxproj -> C:\Users\LENOVO\source\repos\ConComputer\Debug\ConComputer.exe

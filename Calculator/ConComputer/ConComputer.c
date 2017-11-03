@@ -1,5 +1,5 @@
 /*****************************
-*Editor:Joezeo
+*Editor:Joey Zhao
 *E-mail:joeyzhaocn@foxmail.com
 *Date:2017/10/30/21/30
 *****************************/
@@ -10,23 +10,23 @@
 #include <conio.h>
 
 HANDLE hout;
-void CreateUI();			//ç”Ÿæˆç”¨æˆ·ç•Œé¢
-int opearteCom();			//æ“ä½œè®¡ç®—å™¨ï¼Œè¿”å›æ“ä½œç»“æœ
-void showInScreen(int n);	//åœ¨è®¡ç®—æ˜¾ç¤ºåŒºæ˜¾ç¤ºæ“ä½œè¿‡ç¨‹æˆ–è¿ç®—ç»“æœ
-void cleanScrenn();			//æ¸…å±è®¡ç®—æ˜¾ç¤ºåŒº
-void messageError();		//è®¡ç®—æ˜¾ç¤ºåŒºæç¤ºâ€œERRORâ€
+void CreateUI();			//Éú³ÉÓÃ»§½çÃæ
+int opearteCom();			//²Ù×÷¼ÆËãÆ÷£¬·µ»Ø²Ù×÷½á¹û
+void showInScreen(int n);	//ÔÚ¼ÆËãÏÔÊ¾ÇøÏÔÊ¾²Ù×÷¹ı³Ì»òÔËËã½á¹û
+void cleanScrenn();			//ÇåÆÁ¼ÆËãÏÔÊ¾Çø
+void messageError();		//¼ÆËãÏÔÊ¾ÇøÌáÊ¾¡°ERROR¡±
 int main()
 {
 	hout = GetStdHandle(STD_OUTPUT_HANDLE);	
 	CreateUI();	
 
 	while (1) {	
-		STEP1:cleanScrenn();
+		cleanScrenn();
 		int num1 = 0, num2 = 0, ope = 0;
 		int cnt = 0, temp = 0, flag = 0;
 		for (;;) {
-			if((num1 != 42 && num1 != 43 && num1 != 45 && num1 != 47 && num1 != 61) && cnt < 10) {	/*å¤„ç†ç¬¬ä¸€ä¸ªæ•°å€¼*/
-				num1 = opearteCom();
+			if((num1 != 42 && num1 != 43 && num1 != 45 && num1 != 47 && num1 != 61) && cnt < 10) {	/*´¦ÀíµÚÒ»¸öÊıÖµ*/
+				num1 = opearteCom();				
 				if(num1 != 42 && num1 != 43 && num1 != 45 && num1 != 47 && num1 != 61)
 					temp = temp * 10 + num1;
 				showInScreen(temp);
@@ -40,30 +40,35 @@ int main()
 				break;
 			}
 		}
-		while (cnt == 10) {		/*å¦‚æœè¶…è¿‡æœ€å¤§æ•°å€¼ï¼Œåˆ™æç¤ºERRORï¼Œå›åˆ°å¼€å¤´ï¼Œåˆå§‹åŒ–è®¡ç®—å™¨*/
+		while (cnt == 10) {		/*Èç¹û³¬¹ı×î´óÊıÖµ£¬ÔòÌáÊ¾ERROR£¬»Øµ½¿ªÍ·£¬³õÊ¼»¯¼ÆËãÆ÷*/
 			int tmp;
 			tmp = getch();
-			if (tmp == '\r') {	/*è¾“å…¥å›è½¦å½’0ï¼Œåˆå§‹åŒ–è®¡ç®—å™¨*/
-				goto STEP1;
+			if (tmp == '\r') {	/*ÊäÈë»Ø³µ¹é0£¬³õÊ¼»¯¼ÆËãÆ÷*/
+				flag = 1;
+				break;
 			}			
 		} 
+		if(flag) continue;
 
-		if (num1 == 61) {		/*å¦‚æœå¤„ç†å®Œç¬¬ä¸€ä¸ªæ•°å°±æŒ‰â€œ=â€ï¼Œåˆ™ç›´æ¥è¾“å‡ºç»“æœ*/
+		while (num1 == 61) {		/*Èç¹û´¦ÀíÍêµÚÒ»¸öÊı¾Í°´¡°=¡±£¬ÔòÖ±½ÓÊä³ö½á¹û*/
 			cleanScrenn();
 			showInScreen(temp);
 			int tmp;
 			tmp = getch();
 			if (tmp == '\r') {
-				goto STEP1;
+				flag = 1;
+				break;
 			}
 		}
+		if(flag) continue;
+
 		cleanScrenn();
 		ope = num1;
 		num1 = temp;
 		temp = 0; cnt = 0;
 
 		for (;;) {
-			if ((num2 != 42 && num2 != 43 && num2 != 45 && num2 != 47 && num2 != 61) && cnt < 10) {		/*å¤„ç†ç¬¬äºŒä¸ªæ•°å€¼*/
+			if ((num2 != 42 && num2 != 43 && num2 != 45 && num2 != 47 && num2 != 61) && cnt < 10) {		/*´¦ÀíµÚ¶ş¸öÊıÖµ*/
 				num2 = opearteCom();
 				if(num2 != 42 && num2 != 43 && num2 != 45 && num2 != 47 && num2 != 61)
 					temp = temp * 10 + num2;
@@ -78,22 +83,27 @@ int main()
 				break;
 			}
 		}
-		while (cnt == 10) {			/*å¦‚æœè¶…è¿‡æœ€å¤§æ•°å€¼ï¼Œåˆ™æç¤ºERRORï¼Œå¹¶ä¸”å›åˆ°å¼€å¤´ï¼Œåˆå§‹åŒ–è®¡ç®—å™¨*/
+		while (cnt == 10) {			/*Èç¹û³¬¹ı×î´óÊıÖµ£¬ÔòÌáÊ¾ERROR£¬²¢ÇÒ»Øµ½¿ªÍ·£¬³õÊ¼»¯¼ÆËãÆ÷*/
 			int tmp;
 			tmp = getch();
-			if (tmp == '\r') {		/*å½’0ï¼Œåˆå§‹åŒ–è®¡ç®—å™¨*/
-				goto STEP1;
+			if (tmp == '\r') {		/*¹é0£¬³õÊ¼»¯¼ÆËãÆ÷*/
+				flag = 1;
+				break;
 			}
 		}
+		if(flag) continue;
 
-		while (num2 == 42 || num2 ==43 || num2 == 45 || num2 == 47) {	/*è¾“å…¥å®Œç¬¬äºŒä¸ªæ•°å€¼å,å¦‚æœé”®å…¥â€œ+-/*â€,å‘ç”Ÿé”™è¯¯ï¼Œå›åˆ°å¼€å¤´ï¼Œåˆå§‹åŒ–è®¡ç®—å™¨*/
+		while (num2 == 42 || num2 ==43 || num2 == 45 || num2 == 47) {	/*ÊäÈëÍêµÚ¶ş¸öÊıÖµºó,Èç¹û¼üÈë¡°+-/*¡±,·¢Éú´íÎó£¬»Øµ½¿ªÍ·£¬³õÊ¼»¯¼ÆËãÆ÷*/
 			messageError();
 			int tmp;
 			tmp = getch();
 			if (tmp == '\r') {
-				goto STEP1;
+				flag = 1;
+				break;
 			}
 		}
+		if (flag) continue;
+
 		num2 = temp;
 		temp = 0; cnt = 0;
 		switch (ope)
@@ -114,14 +124,16 @@ int main()
 			break;
 		}
 		
-		while (temp > 999999999) {		/*å¦‚æœè®¡ç®—ç»“æœè¶…è¿‡æœ€å¤§æ•°å€¼ï¼Œåˆ™æç¤ºERRORï¼Œå›åˆ°å¼€å¤´ï¼Œåˆå§‹åŒ–è®¡ç®—å™¨*/
+		while (temp > 999999999) {		/*Èç¹û¼ÆËã½á¹û³¬¹ı×î´óÊıÖµ£¬ÔòÌáÊ¾ERROR£¬»Øµ½¿ªÍ·£¬³õÊ¼»¯¼ÆËãÆ÷*/
 			messageError();
 			int tmp;
 			tmp = getch();
 			if (tmp == '\r') {
-				goto STEP1;
+				flag = 1;
+				break;
 			}
 		}
+		if(flag) continue;
 		
 		cleanScrenn();
 		showInScreen(temp);
@@ -138,7 +150,7 @@ int main()
 void CreateUI() {
 	COORD coord;
 	int cnt = 7;
-	/*èµ·å§‹åæ ‡ï¼ˆ22ï¼Œ1ï¼‰*/
+	/*ÆğÊ¼×ø±ê£¨22£¬1£©*/
 	coord.X = 30;
 	coord.Y = 3;
 	SetConsoleCursorPosition(hout, coord);
@@ -206,93 +218,96 @@ void CreateUI() {
 	coord.Y = 4;
 	coord.X = 0;
 	SetConsoleCursorPosition(hout, coord);
-	printf("è¯´æ˜ï¼š");
+	printf("ËµÃ÷£º");
 
 	coord.Y = 6;
 	coord.X = 0;
 	SetConsoleCursorPosition(hout, coord);
-	printf("è¿™æ˜¯ä¸€ä¸ªç®€æ˜“è®¡ç®—å™¨");
+	printf("ÕâÊÇÒ»¸ö¼òÒ×¼ÆËãÆ÷");
 
 	coord.Y += 2;
 	coord.X = 0;
 	SetConsoleCursorPosition(hout, coord);
-	printf("æŒ‰ã€Šå›è½¦ã€‹é€‰å–æ•°å­—å’Œè¿ç®—ç¬¦");
+	printf("°´¡¶»Ø³µ¡·Ñ¡È¡Êı×ÖºÍÔËËã·û");
 
 	coord.Y += 2;
 	coord.X = 0;
 	SetConsoleCursorPosition(hout, coord);
-	printf("è¿ç®—ç»“æŸåæŒ‰ã€Šå›è½¦ã€‹å½’0");
+	printf("ÔËËã½áÊøºó°´¡¶»Ø³µ¡·¹é0");
 
 	coord.Y += 3;
 	coord.X = 0;
 	SetConsoleCursorPosition(hout, coord);
-	printf("æœ¬è®¡ç®—å™¨æ”¯æŒæœ€å¤§æ•°å€¼999999999\n");
-	printf("ERROR:è¡¨ç¤ºè¶…è¿‡æœ€å¤§æ•°å€¼é™åˆ¶,æˆ–è€…è¿›è¡Œäº†éæ³•æ“ä½œï¼ŒæŒ‰ã€Šå›è½¦ã€‹å½’0");
+	printf("±¾¼ÆËãÆ÷Ö§³Ö×î´óÊıÖµ999999999\n");
+	printf("ERROR:±íÊ¾³¬¹ı×î´óÊıÖµÏŞÖÆ,»òÕß½øĞĞÁË·Ç·¨²Ù×÷£¬°´¡¶»Ø³µ¡·¹é0");
 
 }
 /*
-æ­¤è®¡ç®—å™¨å…‰æ ‡ç§»åŠ¨çš„è¾¹ç•Œä¸ºï¼š
-Xï¼š29 - 44
-Yï¼š02 - 10
-æ•°æ®è¾“å‡ºè¡Œä¸ºï¼š11
+´Ë¼ÆËãÆ÷¹â±êÒÆ¶¯µÄ±ß½çÎª£º
+X£º29 - 44
+Y£º02 - 10
+Êı¾İÊä³öĞĞÎª£º11
 */
 int opearteCom() {
 	COORD coord;
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	coord.X = 29;
 	coord.Y = 2;
 	SetConsoleCursorPosition(hout, coord);
 
-	STEP2:int ch;
-	ch = getch();
+	int ch;
+	STEP1:ch = getch();
 
-	while (ch == 0xE0) {
+	while (1) {
 		ch = getch();
-		if (ch == 0x48) {
+		
+		if (ch == 0x48) {	//ÉÏ
 			if (coord.Y != 2) coord.Y--;
 		}
 
-		if (ch == 0x50) {
+		if (ch == 0x50) {	//ÏÂ
 			if (coord.Y != 9) coord.Y++;
 		}
 
-		if (ch == 0x4b) {
+		if (ch == 0x4b) {	//×ó
 			if (coord.X != 29) coord.X--;
 		}
 
-		if (ch == 0x4d) {
+		if (ch == 0x4d) {	//ÓÒ
 			if (coord.X != 43) coord.X++;
 		}
 		SetConsoleCursorPosition(hout, coord);
 		ch = getch();
+		if (ch == 0x0d) {
+			switch (coord.Y) {
+			case 3:
+				if (coord.X == 30) ch = 7;
+				if (coord.X == 33) ch = 8;
+				if (coord.X == 36) ch = 9;
+				break;
+			case 5:
+				if (coord.X == 30) ch = 4;
+				if (coord.X == 33) ch = 5;
+				if (coord.X == 36) ch = 6;
+				if (coord.X == 40) ch = 43;		//+ : 43
+				if (coord.X == 43) ch = 45;		//- : 45
+				break;
+			case 7:
+				if (coord.X == 30) ch = 1;
+				if (coord.X == 33) ch = 2;
+				if (coord.X == 36) ch = 3;
+				if (coord.X == 40) ch = 42;		//* : 42
+				if (coord.X == 43) ch = 47;		// /: 47
+				break;
+			case 9:
+				if (coord.X == 33) ch = 0;
+				if (coord.X == 40) ch = 61;		//= : 61
+				break;
+			}	
+			break;
+		}			
 	}
-	if (ch == 0x0d) {
-		switch (coord.Y) {
-		case 3:
-			if (coord.X == 30) ch = 7;
-			if (coord.X == 33) ch = 8;
-			if (coord.X == 36) ch = 9;
-			break;
-		case 5:
-			if (coord.X == 30) ch = 4;
-			if (coord.X == 33) ch = 5;
-			if (coord.X == 36) ch = 6;
-			if (coord.X == 40) ch = 43;		//+ : 43
-			if (coord.X == 43) ch = 45;		//- : 45
-			break;
-		case 7:
-			if (coord.X == 30) ch = 1;
-			if (coord.X == 33) ch = 2;
-			if (coord.X == 36) ch = 3;
-			if (coord.X == 40) ch = 42;		//* : 42
-			if (coord.X == 43) ch = 47;		// /: 47
-			break;
-		case 9:
-			if (coord.X == 33) ch = 0;
-			if (coord.X == 40) ch = 61;		//= : 61
-			break;
-		}
-		if (ch == 13 || ch == ' ') goto STEP2;
-	}
+	if (ch == 13) goto STEP1;
 	return ch;
 }
 
@@ -322,3 +337,5 @@ void messageError() {
 	SetConsoleCursorPosition(hout, coord);
 	printf("ERROR!");
 }
+
+
