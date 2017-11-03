@@ -1,5 +1,5 @@
 /*****************************
-*Editor:Joey Zhao
+*Editor:Joezeo
 *E-mail:joeyzhaocn@foxmail.com
 *Date:2017/10/30/21/30
 *****************************/
@@ -10,11 +10,11 @@
 #include <conio.h>
 
 HANDLE hout;
-void CreateUI();			//Éú³ÉÓÃ»§½çÃæ
-int opearteCom();			//²Ù×÷¼ÆËãÆ÷£¬·µ»Ø²Ù×÷½á¹û
-void showInScreen(int n);	//ÔÚ¼ÆËãÏÔÊ¾ÇøÏÔÊ¾²Ù×÷¹ı³Ì»òÔËËã½á¹û
-void cleanScrenn();			//ÇåÆÁ¼ÆËãÏÔÊ¾Çø
-void messageError();		//¼ÆËãÏÔÊ¾ÇøÌáÊ¾¡°ERROR¡±
+void CreateUI();			//ç”Ÿæˆç”¨æˆ·ç•Œé¢
+int opearteCom();			//æ“ä½œè®¡ç®—å™¨ï¼Œè¿”å›æ“ä½œç»“æœ
+void showInScreen(int n);	//åœ¨è®¡ç®—æ˜¾ç¤ºåŒºæ˜¾ç¤ºæ“ä½œè¿‡ç¨‹æˆ–è¿ç®—ç»“æœ
+void cleanScrenn();			//æ¸…å±è®¡ç®—æ˜¾ç¤ºåŒº
+void messageError();		//è®¡ç®—æ˜¾ç¤ºåŒºæç¤ºâ€œERRORâ€
 int main()
 {
 	hout = GetStdHandle(STD_OUTPUT_HANDLE);	
@@ -25,7 +25,7 @@ int main()
 		int num1 = 0, num2 = 0, ope = 0;
 		int cnt = 0, temp = 0, flag = 0;
 		for (;;) {
-			if((num1 != 42 && num1 != 43 && num1 != 45 && num1 != 47 && num1 != 61) && cnt < 10) {	/*´¦ÀíµÚÒ»¸öÊıÖµ*/
+			if((num1 != 42 && num1 != 43 && num1 != 45 && num1 != 47 && num1 != 61) && cnt < 10) {	/*å¤„ç†ç¬¬ä¸€ä¸ªæ•°å€¼*/
 				num1 = opearteCom();
 				if(num1 != 42 && num1 != 43 && num1 != 45 && num1 != 47 && num1 != 61)
 					temp = temp * 10 + num1;
@@ -40,15 +40,15 @@ int main()
 				break;
 			}
 		}
-		while (cnt == 10) {		/*Èç¹û³¬¹ı×î´óÊıÖµ£¬ÔòÌáÊ¾ERROR£¬»Øµ½¿ªÍ·£¬³õÊ¼»¯¼ÆËãÆ÷*/
+		while (cnt == 10) {		/*å¦‚æœè¶…è¿‡æœ€å¤§æ•°å€¼ï¼Œåˆ™æç¤ºERRORï¼Œå›åˆ°å¼€å¤´ï¼Œåˆå§‹åŒ–è®¡ç®—å™¨*/
 			int tmp;
 			tmp = getch();
-			if (tmp == '\r') {	/*ÊäÈë»Ø³µ¹é0£¬³õÊ¼»¯¼ÆËãÆ÷*/
+			if (tmp == '\r') {	/*è¾“å…¥å›è½¦å½’0ï¼Œåˆå§‹åŒ–è®¡ç®—å™¨*/
 				goto STEP1;
 			}			
 		} 
 
-		if (num1 == 61) {		/*Èç¹û´¦ÀíÍêµÚÒ»¸öÊı¾Í°´¡°=¡±£¬ÔòÖ±½ÓÊä³ö½á¹û*/
+		if (num1 == 61) {		/*å¦‚æœå¤„ç†å®Œç¬¬ä¸€ä¸ªæ•°å°±æŒ‰â€œ=â€ï¼Œåˆ™ç›´æ¥è¾“å‡ºç»“æœ*/
 			cleanScrenn();
 			showInScreen(temp);
 			int tmp;
@@ -63,7 +63,7 @@ int main()
 		temp = 0; cnt = 0;
 
 		for (;;) {
-			if ((num2 != 42 && num2 != 43 && num2 != 45 && num2 != 47 && num2 != 61) && cnt < 10) {		/*´¦ÀíµÚ¶ş¸öÊıÖµ*/
+			if ((num2 != 42 && num2 != 43 && num2 != 45 && num2 != 47 && num2 != 61) && cnt < 10) {		/*å¤„ç†ç¬¬äºŒä¸ªæ•°å€¼*/
 				num2 = opearteCom();
 				if(num2 != 42 && num2 != 43 && num2 != 45 && num2 != 47 && num2 != 61)
 					temp = temp * 10 + num2;
@@ -78,15 +78,15 @@ int main()
 				break;
 			}
 		}
-		while (cnt == 10) {			/*Èç¹û³¬¹ı×î´óÊıÖµ£¬ÔòÌáÊ¾ERROR£¬²¢ÇÒ»Øµ½¿ªÍ·£¬³õÊ¼»¯¼ÆËãÆ÷*/
+		while (cnt == 10) {			/*å¦‚æœè¶…è¿‡æœ€å¤§æ•°å€¼ï¼Œåˆ™æç¤ºERRORï¼Œå¹¶ä¸”å›åˆ°å¼€å¤´ï¼Œåˆå§‹åŒ–è®¡ç®—å™¨*/
 			int tmp;
 			tmp = getch();
-			if (tmp == '\r') {		/*¹é0£¬³õÊ¼»¯¼ÆËãÆ÷*/
+			if (tmp == '\r') {		/*å½’0ï¼Œåˆå§‹åŒ–è®¡ç®—å™¨*/
 				goto STEP1;
 			}
 		}
 
-		while (num2 == 42 || num2 ==43 || num2 == 45 || num2 == 47) {	/*ÊäÈëÍêµÚ¶ş¸öÊıÖµºó,Èç¹û¼üÈë¡°+-/*¡±,·¢Éú´íÎó£¬»Øµ½¿ªÍ·£¬³õÊ¼»¯¼ÆËãÆ÷*/
+		while (num2 == 42 || num2 ==43 || num2 == 45 || num2 == 47) {	/*è¾“å…¥å®Œç¬¬äºŒä¸ªæ•°å€¼å,å¦‚æœé”®å…¥â€œ+-/*â€,å‘ç”Ÿé”™è¯¯ï¼Œå›åˆ°å¼€å¤´ï¼Œåˆå§‹åŒ–è®¡ç®—å™¨*/
 			messageError();
 			int tmp;
 			tmp = getch();
@@ -114,7 +114,7 @@ int main()
 			break;
 		}
 		
-		while (temp > 999999999) {		/*Èç¹û¼ÆËã½á¹û³¬¹ı×î´óÊıÖµ£¬ÔòÌáÊ¾ERROR£¬»Øµ½¿ªÍ·£¬³õÊ¼»¯¼ÆËãÆ÷*/
+		while (temp > 999999999) {		/*å¦‚æœè®¡ç®—ç»“æœè¶…è¿‡æœ€å¤§æ•°å€¼ï¼Œåˆ™æç¤ºERRORï¼Œå›åˆ°å¼€å¤´ï¼Œåˆå§‹åŒ–è®¡ç®—å™¨*/
 			messageError();
 			int tmp;
 			tmp = getch();
@@ -138,7 +138,7 @@ int main()
 void CreateUI() {
 	COORD coord;
 	int cnt = 7;
-	/*ÆğÊ¼×ø±ê£¨22£¬1£©*/
+	/*èµ·å§‹åæ ‡ï¼ˆ22ï¼Œ1ï¼‰*/
 	coord.X = 30;
 	coord.Y = 3;
 	SetConsoleCursorPosition(hout, coord);
@@ -206,35 +206,35 @@ void CreateUI() {
 	coord.Y = 4;
 	coord.X = 0;
 	SetConsoleCursorPosition(hout, coord);
-	printf("ËµÃ÷£º");
+	printf("è¯´æ˜ï¼š");
 
 	coord.Y = 6;
 	coord.X = 0;
 	SetConsoleCursorPosition(hout, coord);
-	printf("ÕâÊÇÒ»¸ö¼òÒ×¼ÆËãÆ÷");
+	printf("è¿™æ˜¯ä¸€ä¸ªç®€æ˜“è®¡ç®—å™¨");
 
 	coord.Y += 2;
 	coord.X = 0;
 	SetConsoleCursorPosition(hout, coord);
-	printf("°´¡¶»Ø³µ¡·Ñ¡È¡Êı×ÖºÍÔËËã·û");
+	printf("æŒ‰ã€Šå›è½¦ã€‹é€‰å–æ•°å­—å’Œè¿ç®—ç¬¦");
 
 	coord.Y += 2;
 	coord.X = 0;
 	SetConsoleCursorPosition(hout, coord);
-	printf("ÔËËã½áÊøºó°´¡¶»Ø³µ¡·¹é0");
+	printf("è¿ç®—ç»“æŸåæŒ‰ã€Šå›è½¦ã€‹å½’0");
 
 	coord.Y += 3;
 	coord.X = 0;
 	SetConsoleCursorPosition(hout, coord);
-	printf("±¾¼ÆËãÆ÷Ö§³Ö×î´óÊıÖµ999999999\n");
-	printf("ERROR:±íÊ¾³¬¹ı×î´óÊıÖµÏŞÖÆ,»òÕß½øĞĞÁË·Ç·¨²Ù×÷£¬°´¡¶»Ø³µ¡·¹é0");
+	printf("æœ¬è®¡ç®—å™¨æ”¯æŒæœ€å¤§æ•°å€¼999999999\n");
+	printf("ERROR:è¡¨ç¤ºè¶…è¿‡æœ€å¤§æ•°å€¼é™åˆ¶,æˆ–è€…è¿›è¡Œäº†éæ³•æ“ä½œï¼ŒæŒ‰ã€Šå›è½¦ã€‹å½’0");
 
 }
 /*
-´Ë¼ÆËãÆ÷¹â±êÒÆ¶¯µÄ±ß½çÎª£º
-X£º29 - 44
-Y£º02 - 10
-Êı¾İÊä³öĞĞÎª£º11
+æ­¤è®¡ç®—å™¨å…‰æ ‡ç§»åŠ¨çš„è¾¹ç•Œä¸ºï¼š
+Xï¼š29 - 44
+Yï¼š02 - 10
+æ•°æ®è¾“å‡ºè¡Œä¸ºï¼š11
 */
 int opearteCom() {
 	COORD coord;
