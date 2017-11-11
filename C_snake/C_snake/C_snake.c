@@ -50,7 +50,7 @@ gameProcess()：
 */
 int gameProcess(SnakeBody** snakeHead,Food* food,int *score,RankList *rankList);//父函数
 void createSnakeBody(SnakeBody** snakeHead,SnakeBody* newBody);			//吃到食物时创建一个新的蛇身体
-void createFood(SnakeBody* snakeHead,Food* food);				//迟到食物后创建一个新的食物
+void createFood(SnakeBody* snakeHead,Food* food);				//吃到食物后创建一个新的食物
 void moveSnake(SnakeBody* snakeHead);						//按每个身体结点的运动方向进行相应的移动
 void showSnake(SnakeBody* bodyHead,Food* food,int *score,RankList *rankList);	//在屏幕上打印出蛇
 int judgeGame(SnakeBody* snakeHead);						//判断蛇是否撞到墙或者撞到自身，如果是返回1，否返回0
