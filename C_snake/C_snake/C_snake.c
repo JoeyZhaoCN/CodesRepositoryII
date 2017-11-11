@@ -13,17 +13,17 @@
 
 HANDLE hout;
 typedef struct {
-	char bodylook;			//ÉßÉíÑùÊ½
-	int x;					//ÉßÉí½áµãµÄx×ø±ê
-	int y;					//ÉßÉí½áµãµÄyzuob
-	int motionNum;			//ÉßÉí½áµãµÄµ±Ç°ÔË¶¯·½Ïò
-	struct SnakeBody *next;	//Ö¸ÏòÏÂÒ»ÉßÉí½áµã
-	struct SnakeBody *pre;	//Ö¸ÏòÇ°Çı½áµã
+	char bodylook;		//è›‡èº«æ ·å¼
+	int x;			//è›‡èº«ç»“ç‚¹çš„xåæ ‡
+	int y;			//è›‡èº«ç»“ç‚¹çš„yzuob
+	int motionNum;		//è›‡èº«ç»“ç‚¹çš„å½“å‰è¿åŠ¨æ–¹å‘
+	struct SnakeBody *next;	//æŒ‡å‘ä¸‹ä¸€è›‡èº«ç»“ç‚¹
+	struct SnakeBody *pre;	//æŒ‡å‘å‰é©±ç»“ç‚¹
 }SnakeBody;
 
 typedef struct {
-	int x;	//Ê³ÎïµÄx×ø±ê
-	int y;	//Ê³ÎïµÄy×ø±ê
+	int x;	//é£Ÿç‰©çš„xåæ ‡
+	int y;	//é£Ÿç‰©çš„yåæ ‡
 }Food;
 
 typedef struct {
@@ -31,37 +31,37 @@ typedef struct {
 	char *name;
 }RankList;
 
-void initGame(SnakeBody* snake_H, SnakeBody* snake_T, SnakeBody** snakeHead);//³õÊ¼»¯¸÷¸ö±äÁ¿
+void initGame(SnakeBody* snake_H, SnakeBody* snake_T, SnakeBody** snakeHead);//åˆå§‹åŒ–å„ä¸ªå˜é‡
 
 /*
-gameBegin()£º°üÀ¨×¼±¸½çÃæprepareUI()º¯Êı£¬ºÍÉèÖÃ¹â±ê²»¿É¼ûinvisibleCursor()º¯Êı£¬ÉèÖÃÓÎÏ·½çÃægameUI()º¯Êı£¬
-			 ³õÊ¼»¯ÉßintialSnake(snakeBody snakeHead)º¯Êı£¬³õÊ¼»¯Ê³ÎïinitialFood(snakeBody snakeHead)
+gameBegin()ï¼šåŒ…æ‹¬å‡†å¤‡ç•Œé¢prepareUI()å‡½æ•°ï¼Œå’Œè®¾ç½®å…‰æ ‡ä¸å¯è§invisibleCursor()å‡½æ•°ï¼Œè®¾ç½®æ¸¸æˆç•Œé¢gameUI()å‡½æ•°ï¼Œ
+			 åˆå§‹åŒ–è›‡intialSnake(snakeBody snakeHead)å‡½æ•°ï¼Œåˆå§‹åŒ–é£Ÿç‰©initialFood(snakeBody snakeHead)
 */
-void gameBegin(SnakeBody* snakeHead,Food* food,int *score,RankList *rankList);	//¸¸º¯Êı
-void prepareUI();																//×¼±¸½çÃæ
-void gameUI(int *score,RankList *rankList);										//ÓÎÏ·½çÃæ
-void invisibleCursor();															//ÉèÖÃ¹â±ê²»¿É¼û
-void initialSnake(SnakeBody* snakeHead);										//³õÊ¼»¯Éß£¬ÔÚÆÁÄ»ÉÏÏÔÊ¾
-void initialFood(SnakeBody* snakeHead,Food* food);								//³õÊ¼»¯Ê³Îï£¬ÔÚÆÁÄ»ÉÏÏÔÊ¾
+void gameBegin(SnakeBody* snakeHead,Food* food,int *score,RankList *rankList);	//çˆ¶å‡½æ•°
+void prepareUI();								//å‡†å¤‡ç•Œé¢
+void gameUI(int *score,RankList *rankList);					//æ¸¸æˆç•Œé¢
+void invisibleCursor();								//è®¾ç½®å…‰æ ‡ä¸å¯è§
+void initialSnake(SnakeBody* snakeHead);					//åˆå§‹åŒ–è›‡ï¼Œåœ¨å±å¹•ä¸Šæ˜¾ç¤º
+void initialFood(SnakeBody* snakeHead,Food* food);				//åˆå§‹åŒ–é£Ÿç‰©ï¼Œåœ¨å±å¹•ä¸Šæ˜¾ç¤º
 
 
 /*
-gameProcess()£º
+gameProcess()ï¼š
 */
-int gameProcess(SnakeBody** snakeHead,Food* food,int *score,RankList *rankList);//¸¸º¯Êı
-void createSnakeBody(SnakeBody** snakeHead,SnakeBody* newBody);					//³Ôµ½Ê³ÎïÊ±´´½¨Ò»¸öĞÂµÄÉßÉíÌå
-void createFood(SnakeBody* snakeHead,Food* food);								//³Ùµ½Ê³Îïºó´´½¨Ò»¸öĞÂµÄÊ³Îï
-void moveSnake(SnakeBody* snakeHead);											//°´Ã¿¸öÉíÌå½áµãµÄÔË¶¯·½Ïò½øĞĞÏàÓ¦µÄÒÆ¶¯£¬²¢·µ»ØÉßÎ²½áµãÎ´²Ù×÷Ç°µÄ¸±±¾
-void showSnake(SnakeBody* bodyHead,Food* food,int *score,RankList *rankList);	//ÔÚÆÁÄ»ÉÏ´òÓ¡³öÉß
-int judgeGame(SnakeBody* snakeHead);											//ÅĞ¶ÏÉßÊÇ·ñ×²µ½Ç½»òÕß×²µ½×ÔÉí£¬Èç¹ûÊÇ·µ»Ø1£¬·ñ·µ»Ø0
-void recordScore(int *score);													//¼ÇÂ¼·ÖÊı
+int gameProcess(SnakeBody** snakeHead,Food* food,int *score,RankList *rankList);//çˆ¶å‡½æ•°
+void createSnakeBody(SnakeBody** snakeHead,SnakeBody* newBody);			//åƒåˆ°é£Ÿç‰©æ—¶åˆ›å»ºä¸€ä¸ªæ–°çš„è›‡èº«ä½“
+void createFood(SnakeBody* snakeHead,Food* food);				//è¿Ÿåˆ°é£Ÿç‰©ååˆ›å»ºä¸€ä¸ªæ–°çš„é£Ÿç‰©
+void moveSnake(SnakeBody* snakeHead);						//æŒ‰æ¯ä¸ªèº«ä½“ç»“ç‚¹çš„è¿åŠ¨æ–¹å‘è¿›è¡Œç›¸åº”çš„ç§»åŠ¨ï¼Œå¹¶è¿”å›è›‡å°¾ç»“ç‚¹æœªæ“ä½œå‰çš„å‰¯æœ¬
+void showSnake(SnakeBody* bodyHead,Food* food,int *score,RankList *rankList);	//åœ¨å±å¹•ä¸Šæ‰“å°å‡ºè›‡
+int judgeGame(SnakeBody* snakeHead);						//åˆ¤æ–­è›‡æ˜¯å¦æ’åˆ°å¢™æˆ–è€…æ’åˆ°è‡ªèº«ï¼Œå¦‚æœæ˜¯è¿”å›1ï¼Œå¦è¿”å›0
+void recordScore(int *score);							//è®°å½•åˆ†æ•°
 
 /*
 gameEnd():
 */
-void gameEnd(int *score,RankList *rankList);		//¸¸º¯Êı
-void updateRanking(RankList *rankList,int *score);	//ÓÎÏ·½áÊø¸üĞÂÅÅĞĞ°ñ
-void endUI(int *score);								//ÓÎÏ·½áÊø½çÃæ
+void gameEnd(int *score,RankList *rankList);		//çˆ¶å‡½æ•°
+void updateRanking(RankList *rankList,int *score);	//æ¸¸æˆç»“æŸæ›´æ–°æ’è¡Œæ¦œ
+void endUI(int *score);					//æ¸¸æˆç»“æŸç•Œé¢
 
 int main(void)
 {
@@ -72,9 +72,9 @@ int main(void)
 		(rankList + i)->name = "XXX";
 	}
 	/*
-		Õâ¸öÓÎÏ·°üÀ¨Á½¸öÑ­»·£º
-		Ò»¸öÊÇ¿ØÖÆÓÎÏ·¿ªÊ¼¡¢½øĞĞ¡¢½áÊøµÄ´óÑ­»·£»
-		ÁíÒ»¸öÊÇ¿ØÖÆÓÎÏ·½øĞĞ¹ı³ÌµÄÑ­»·¡£
+		è¿™ä¸ªæ¸¸æˆåŒ…æ‹¬ä¸¤ä¸ªå¾ªç¯ï¼š
+		ä¸€ä¸ªæ˜¯æ§åˆ¶æ¸¸æˆå¼€å§‹ã€è¿›è¡Œã€ç»“æŸçš„å¤§å¾ªç¯ï¼›
+		å¦ä¸€ä¸ªæ˜¯æ§åˆ¶æ¸¸æˆè¿›è¡Œè¿‡ç¨‹çš„å¾ªç¯ã€‚
 	*/
 	while (1) {		
 		SnakeBody snake_H,snake_T;
@@ -94,7 +94,7 @@ int main(void)
 	return 0;
 }
 /*****************************Initiate************************************/
-void initGame(SnakeBody* snake_H, SnakeBody* snake_T, SnakeBody** snakeHead) {//³õÊ¼»¯¸÷¸ö±äÁ¿
+void initGame(SnakeBody* snake_H, SnakeBody* snake_T, SnakeBody** snakeHead) {//åˆå§‹åŒ–å„ä¸ªå˜é‡
 	snake_H->bodylook = '@';
 	snake_H->motionNum = 0x4d;
 	snake_H->x = 20;
@@ -111,9 +111,9 @@ void initGame(SnakeBody* snake_H, SnakeBody* snake_T, SnakeBody** snakeHead) {//
 }
 
 /*
-	ÓÎÏ··¶Î§£º
-	×óÉÏ¶¥µã£¨1£¬1£©
-	ÓÒÏÂ¶¥µã£¨40£¬21£©
+	æ¸¸æˆèŒƒå›´ï¼š
+	å·¦ä¸Šé¡¶ç‚¹ï¼ˆ1ï¼Œ1ï¼‰
+	å³ä¸‹é¡¶ç‚¹ï¼ˆ40ï¼Œ21ï¼‰
 */
 
 /*****************************game begin***********************************/
@@ -124,7 +124,7 @@ void gameBegin(SnakeBody* snakeHead,Food* food,int *score,RankList *rankList) {
 	initialSnake(snakeHead);
 	initialFood(snakeHead,food);
 }
-void prepareUI() {//»æÖÆ»¶Ó­½çÃæ
+void prepareUI() {//ç»˜åˆ¶æ¬¢è¿ç•Œé¢
 	COORD coord;
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	char ch;
@@ -135,7 +135,7 @@ void prepareUI() {//»æÖÆ»¶Ó­½çÃæ
 	coord.X = 29;
 	coord.Y = 4;
 	SetConsoleCursorPosition(hout, coord);
-	printf("=-¡¤Hungry Snake¡¤-=");
+	printf("=-Â·Hungry SnakeÂ·-=");
 	coord.X = 31;
 	coord.Y++;
 	SetConsoleCursorPosition(hout, coord);
@@ -143,7 +143,7 @@ void prepareUI() {//»æÖÆ»¶Ó­½çÃæ
 	coord.X = 24;
 	coord.Y = 8;
 	SetConsoleCursorPosition(hout, coord);
-	printf("Greeting£¡wellcom to the game£¡");
+	printf("Greetingï¼wellcom to the gameï¼");
 	coord.X = 24;
 	coord.Y += 3;
 	SetConsoleCursorPosition(hout, coord);
@@ -182,7 +182,7 @@ void prepareUI() {//»æÖÆ»¶Ó­½çÃæ
 		if (ch == 's' || ch == 'S') break;
 	}
 }
-void gameUI(int *score,RankList *rankList) {//»æÖÆÓÎÏ·½çÃæ
+void gameUI(int *score,RankList *rankList) {//ç»˜åˆ¶æ¸¸æˆç•Œé¢
 	COORD coord;
 	system("cls");
 	coord.X = 1;
@@ -227,7 +227,7 @@ void gameUI(int *score,RankList *rankList) {//»æÖÆÓÎÏ·½çÃæ
 	coord.Y = 4;
 	coord.X = 52;
 	SetConsoleCursorPosition(hout, coord);
-	printf("¡¤Hungry Snake¡¤");
+	printf("Â·Hungry SnakeÂ·");
 	coord.Y += 3;
 	coord.X = 48;
 	SetConsoleCursorPosition(hout, coord);
@@ -243,13 +243,13 @@ void gameUI(int *score,RankList *rankList) {//»æÖÆÓÎÏ·½çÃæ
 		printf("%d. %-14s%4d", i + 1, (rankList + i)->name, (rankList + i)->score);
 	}
 }
-void invisibleCursor() {//ÉèÖÃ¹â±ê²»¿É¼û
+void invisibleCursor() {//è®¾ç½®å…‰æ ‡ä¸å¯è§
 	CONSOLE_CURSOR_INFO CursorInfo;
-	GetConsoleCursorInfo(hout, &CursorInfo);//»ñÈ¡¿ØÖÆÌ¨¹â±êĞÅÏ¢  
-	CursorInfo.bVisible = 0; //Òş²Ø¿ØÖÆÌ¨¹â±ê  
-	SetConsoleCursorInfo(hout, &CursorInfo);//ÉèÖÃ¿ØÖÆÌ¨¹â±ê×´Ì¬  
+	GetConsoleCursorInfo(hout, &CursorInfo);//è·å–æ§åˆ¶å°å…‰æ ‡ä¿¡æ¯  
+	CursorInfo.bVisible = 0; //éšè—æ§åˆ¶å°å…‰æ ‡  
+	SetConsoleCursorInfo(hout, &CursorInfo);//è®¾ç½®æ§åˆ¶å°å…‰æ ‡çŠ¶æ€  
 }
-void initialSnake(SnakeBody* snakeHead) {//³õÊ¼»¯Éß
+void initialSnake(SnakeBody* snakeHead) {//åˆå§‹åŒ–è›‡
 	COORD coord;
 	SnakeBody* p = snakeHead;
 	while (p != NULL) {
@@ -260,7 +260,7 @@ void initialSnake(SnakeBody* snakeHead) {//³õÊ¼»¯Éß
 		p = p->next;
 	}
 }
-void initialFood(SnakeBody* snakeHead,Food* food) {//³õÊ¼»¯Ê³Îï
+void initialFood(SnakeBody* snakeHead,Food* food) {//åˆå§‹åŒ–é£Ÿç‰©
 	COORD coord;
 	SnakeBody* p = snakeHead;
 	int a,b,flag;
@@ -313,7 +313,7 @@ int gameProcess(SnakeBody** snakeHead,Food* food,int *score,RankList *rankList) 
 	showSnake(*snakeHead,food,score,rankList);
 	return judg;
 }
-void moveSnake(SnakeBody* snakeHead) {//°´Ã¿¸öÉíÌå½áµãµÄÔË¶¯·½Ïò½øĞĞÏàÓ¦µÄÒÆ¶¯£¬²¢·µ»ØÉßÎ²½áµãÎ´²Ù×÷Ç°µÄ¸±±¾
+void moveSnake(SnakeBody* snakeHead) {//æŒ‰æ¯ä¸ªèº«ä½“ç»“ç‚¹çš„è¿åŠ¨æ–¹å‘è¿›è¡Œç›¸åº”çš„ç§»åŠ¨ï¼Œå¹¶è¿”å›è›‡å°¾ç»“ç‚¹æœªæ“ä½œå‰çš„å‰¯æœ¬
 	SnakeBody* p = snakeHead;
 	SnakeBody* temp = NULL;
 	while (p->next != NULL) {
@@ -342,7 +342,7 @@ void moveSnake(SnakeBody* snakeHead) {//°´Ã¿¸öÉíÌå½áµãµÄÔË¶¯·½Ïò½øĞĞÏàÓ¦µÄÒÆ¶¯£¬
 		break;
 	}
 }
-void showSnake(SnakeBody* snakeHead,Food* food,int *score,RankList *rankList) {//´òÓ¡ÉßµÄÉíÌåºÍÊ³Îï
+void showSnake(SnakeBody* snakeHead,Food* food,int *score,RankList *rankList) {//æ‰“å°è›‡çš„èº«ä½“å’Œé£Ÿç‰©
 	COORD coord;
 	SnakeBody* p = snakeHead;
 	gameUI(score,rankList);
@@ -358,7 +358,7 @@ void showSnake(SnakeBody* snakeHead,Food* food,int *score,RankList *rankList) {/
 	SetConsoleCursorPosition(hout, coord);
 	printf("*");
 }
-int judgeGame(SnakeBody* snakeHead) {//ÅĞ¶ÏÉßÊÇ·ñ×²µ½Ç½»òÕß×²µ½×ÔÉí£¬Èç¹ûÊÇ·µ»Ø1£¬·ñ·µ»Ø0
+int judgeGame(SnakeBody* snakeHead) {//åˆ¤æ–­è›‡æ˜¯å¦æ’åˆ°å¢™æˆ–è€…æ’åˆ°è‡ªèº«ï¼Œå¦‚æœæ˜¯è¿”å›1ï¼Œå¦è¿”å›0
 	SnakeBody* temp = snakeHead;
 	SnakeBody* p = snakeHead;
 	if (snakeHead->x > 38 || snakeHead->x < 3 ||
@@ -414,7 +414,7 @@ void createFood(SnakeBody* snakeHead,Food* food) {
 	food->x = a;
 	food->y = b;
 }
-void recordScore(int *score) {//¼ÇÂ¼·ÖÊı
+void recordScore(int *score) {//è®°å½•åˆ†æ•°
 	COORD coord;
 	*score += 10;
 	coord.Y = 7;
@@ -424,7 +424,7 @@ void recordScore(int *score) {//¼ÇÂ¼·ÖÊı
 }
 
 /********************************game end**************************************/
-void gameEnd(int *score,RankList *rankList) {//ÓÎÏ·½áÊø
+void gameEnd(int *score,RankList *rankList) {//æ¸¸æˆç»“æŸ
 	char ch;
 	updateRanking(rankList, score);
 	endUI(score);
@@ -435,7 +435,7 @@ void gameEnd(int *score,RankList *rankList) {//ÓÎÏ·½áÊø
 		}
 	}
 }
-void endUI(int *score) {//ÓÎÏ·½áÊø½çÃæ
+void endUI(int *score) {//æ¸¸æˆç»“æŸç•Œé¢
 	COORD coord;
 	system("cls");
 	coord.X = 35;
@@ -451,7 +451,7 @@ void endUI(int *score) {//ÓÎÏ·½áÊø½çÃæ
 	SetConsoleCursorPosition(hout, coord);
 	printf("push 'S' to restart the game");
 }
-void updateRanking(RankList *rankList, int *score) {//ÓÎÏ·½áÊø¸üĞÂÅÅĞĞ°ñ
+void updateRanking(RankList *rankList, int *score) {//æ¸¸æˆç»“æŸæ›´æ–°æ’è¡Œæ¦œ
 	if (*score < (rankList + 4)->score) return;
 	(rankList + 4)->score = *score;
 	(rankList + 4)->name = "Joezeo";
