@@ -9,7 +9,6 @@
 #include <windows.h>
 #include <conio.h>
 #include <time.h>
-#include <WinUser.h>
 
 HANDLE hout;
 typedef struct {
@@ -43,7 +42,6 @@ void gameUI(int *score,RankList *rankList);					//游戏界面
 void invisibleCursor();								//设置光标不可见
 void initialSnake(SnakeBody* snakeHead);					//初始化蛇，在屏幕上显示
 void initialFood(SnakeBody* snakeHead,Food* food);				//初始化食物，在屏幕上显示
-
 
 /*
 gameProcess()：
