@@ -1,2 +1,2 @@
 # CodesRepositoryII  
-This is a repository for some practice codes. (C)  
+This is a repository for some practice projects. (C)  
