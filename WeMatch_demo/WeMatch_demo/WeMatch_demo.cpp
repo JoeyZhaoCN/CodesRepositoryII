@@ -7,29 +7,29 @@ typedef struct {
 	int x;
 	int y;
 }cursor;
-/******************³õÊ¼»¯½çÃæ**********************/
+/******************åˆå§‹åŒ–ç•Œé¢**********************/
 void initGame(cursor*,int*,int*,int*);	
 
-/******************ÓÎÏ·¿ªÊ¼½çÃæ********************/
+/******************æ¸¸æˆå¼€å§‹ç•Œé¢********************/
 void gameBegin(cursor*,int*,int*);	
 
-/******************ÓÎÏ·½øĞĞ¹ı³Ì********************/
+/******************æ¸¸æˆè¿›è¡Œè¿‡ç¨‹********************/
 void gameProcess(cursor*,cursor*,int*,int*,int*);	
-void drawCursor(cursor*, COLORREF);						//»­¹â±ê
-void drawTime(int);										//»­Ê±¼ä
-void drawScore(int);									//»­·ÖÊı
-void getSameColorBalls(cursor*,cursor*,COLORREF,int*);	//»ñµÃÓë¹â±êÎ»ÖÃÑÕÉ«ÏàÍ¬µÄĞ¡Çò£¬½«Æäx£¬yÖµ·ÅÈëÊı×éballsArrÖĞ
-int isValid(cursor*, cursor*, COLORREF, int*);			//µİ¹éº¯ÊıgetSamColorBallsµÄ½áÊøÌõ¼ş
-void ballsFall(cursor*, int*);							//Ïû³ıĞ¡Çòºó£¬ÉÏ·½µÄĞ¡ÇòÏÂÂä
+void drawCursor(cursor*, COLORREF);			//ç”»å…‰æ ‡
+void drawTime(int);					//ç”»æ—¶é—´
+void drawScore(int);					//ç”»åˆ†æ•°
+void getSameColorBalls(cursor*,cursor*,COLORREF,int*);	//è·å¾—ä¸å…‰æ ‡ä½ç½®é¢œè‰²ç›¸åŒçš„å°çƒï¼Œå°†å…¶xï¼Œyå€¼æ”¾å…¥æ•°ç»„ballsArrä¸­
+int isValid(cursor*, cursor*, COLORREF, int*);		//é€’å½’å‡½æ•°getSamColorBallsçš„ç»“æŸæ¡ä»¶
+void ballsFall(cursor*, int*);				//æ¶ˆé™¤å°çƒåï¼Œä¸Šæ–¹çš„å°çƒä¸‹è½
 
-/******************ÓÎÏ·½áÊø£¬ÊÍ·Å×ÊÔ´***************/
+/******************æ¸¸æˆç»“æŸï¼Œé‡Šæ”¾èµ„æº***************/
 int gameEnd(int*);		
 void closeGame();
 
 COLORREF colorArr[6] = { RGB(200,0,0),RGB(0,200,0),RGB(0,0,200),
-							RGB(200,200,0),RGB(200,0,200),RGB(0,200,200) };
-cursor *cur = (cursor *)malloc(sizeof(cursor)); 			//µ±Ç°¹â±êµÄÎ»ÖÃ
-cursor *ballsArr = (cursor *)malloc(180 * sizeof(cursor));	//Í¬É«Ğ¡Çò×ø±ê
+				RGB(200,200,0),RGB(200,0,200),RGB(0,200,200) };
+cursor *cur = (cursor *)malloc(sizeof(cursor)); 		//å½“å‰å…‰æ ‡çš„ä½ç½®
+cursor *ballsArr = (cursor *)malloc(180 * sizeof(cursor));	//åŒè‰²å°çƒåæ ‡
 int sec, score,ball_num;
 int main() {
 	while (1) {
@@ -59,11 +59,11 @@ void initGame(cursor *cur,int *sec,int *score,int *ball_num) {
 /* game begin                                                                     */
 /************************************************************************/
 void gameBegin(cursor *cur,int *sec,int *score) {
-	//»æÖÆ±ß¿ò
+	//ç»˜åˆ¶è¾¹æ¡†
 	setlinecolor(RGB(50, 50, 50));
 	setlinestyle(PS_SOLID, 10);
 	rectangle(255, 45, 745, 655);
-	//»æÖÆĞ¡Çò	
+	//ç»˜åˆ¶å°çƒ	
 	setlinestyle(PS_SOLID, 1);
 	srand((unsigned)time(NULL));
 	for (int x = 280; x < 740; x += 40) {
@@ -75,11 +75,11 @@ void gameBegin(cursor *cur,int *sec,int *score) {
 			fillcircle(x, y, 19);
 		}
 	}
-	//»æÖÆ¹â±ê
+	//ç»˜åˆ¶å…‰æ ‡
 	drawCursor(cur, RGB(255, 255, 255));
-	//»æÖÆÊ±¼ä
+	//ç»˜åˆ¶æ—¶é—´
 	drawTime(*sec);
-	//»æÖÆ·ÖÊı
+	//ç»˜åˆ¶åˆ†æ•°
 	drawScore(*score);
 }
 
@@ -144,15 +144,15 @@ void drawCursor(cursor *cur, COLORREF color){
 void drawTime(int sec) {
 	char str[30];
 	settextcolor(RGB(255, 255, 0));
-	settextstyle(25, 0, _T("ºÚÌå"));
-	sprintf_s(str, "Ê£ÓàÊ±¼ä£º %d s", sec);
+	settextstyle(25, 0, _T("é»‘ä½“"));
+	sprintf_s(str, "å‰©ä½™æ—¶é—´ï¼š %d s", sec);
 	outtextxy(30, 50, str);
 }
 void drawScore(int score) {
 	char str[30];
 	settextcolor(RGB(255, 0, 0));
-	settextstyle(25, 0, _T("ºÚÌå"));
-	sprintf_s(str, "·ÖÊı£º%d", score);
+	settextstyle(25, 0, _T("é»‘ä½“"));
+	sprintf_s(str, "åˆ†æ•°ï¼š%d", score);
 	outtextxy(30, 600, str);
 }
 void getSameColorBalls(cursor *cur,cursor *ballsArr,COLORREF col,int *ball_num) {
@@ -222,9 +222,9 @@ void ballsFall(cursor *ballsArr, int *ball_num) {
 int gameEnd(int *score) {
 	char str[50];
 	int ch;
-	sprintf_s(str,"ÓÎÏ·½áÊø£¡ÄãµÄ·ÖÊıÊÇ%3d",*score);
+	sprintf_s(str,"æ¸¸æˆç»“æŸï¼ä½ çš„åˆ†æ•°æ˜¯%3d",*score);
 	cleardevice();
-	settextstyle(30, 0, _T("ºÚÌå"));
+	settextstyle(30, 0, _T("é»‘ä½“"));
 	settextcolor(0x5555FF);
 	outtextxy(325, 300, str);
 	sprintf_s(str, "R/START         Q/QUIET");
