@@ -1,0 +1,3 @@
+﻿  WeMatch_demo.cpp
+f:\程序\wematch_demo\wematch_demo\wematch_demo.cpp(238): warning C4715: “gameEnd”: 不是所有的控件路径都返回值
+  WeMatch_demo.vcxproj -> F:\程序\WeMatch_demo\Debug\WeMatch_demo.exe
