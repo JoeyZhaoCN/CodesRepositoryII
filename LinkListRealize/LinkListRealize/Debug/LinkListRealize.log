@@ -1,0 +1,32 @@
+﻿  LinkList.c
+f:\程序\linklistrealize\linklistrealize\linklist.c(84): warning C4013: “getch”未定义；假设外部返回 int
+f:\程序\linklistrealize\linklistrealize\linklist.c(124): warning C4133: “=”: 从“node”到“Node *”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(126): warning C4133: “=”: 从“node”到“Node *”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(134): warning C4133: “=”: 从“node”到“Node *”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(136): warning C4133: “=”: 从“node”到“Node *”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(146): warning C4133: “=”: 从“Node *”到“node”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(156): warning C4133: “=”: 从“node”到“Node *”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(157): warning C4133: “=”: 从“node”到“Node *”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(165): warning C4133: “=”: 从“Node *”到“node”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(186): warning C4133: “=”: 从“Node *”到“node”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(203): warning C4133: “=”: 从“Node *”到“node”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(228): warning C4133: “=”: 从“Node *”到“node”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(230): warning C4133: “return”: 从“Node *”到“node”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(244): warning C4133: “=”: 从“Node *”到“node”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(250): warning C4133: “return”: 从“Node *”到“node”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(264): warning C4133: “=”: 从“Node *”到“node”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(268): warning C4133: “=”: 从“node”到“Node *”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(270): warning C4133: “=”: 从“node”到“Node *”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(271): warning C4133: “=”: 从“node”到“Node *”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(275): warning C4133: “=”: 从“node”到“Node *”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(276): warning C4133: “=”: 从“node”到“Node *”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(266): warning C4133: “初始化”: 从“Node *”到“node”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(293): warning C4133: “=”: 从“Node *”到“node”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(296): warning C4133: “=”: 从“node”到“Node *”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(297): warning C4133: “=”: 从“node”到“Node *”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(304): warning C4133: “=”: 从“node”到“Node *”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(305): warning C4133: “=”: 从“node”到“Node *”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(306): warning C4133: “=”: 从“node”到“Node *”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(302): warning C4133: “初始化”: 从“Node *”到“node”的类型不兼容
+f:\程序\linklistrealize\linklistrealize\linklist.c(315): warning C4133: “=”: 从“Node *”到“node”的类型不兼容
+  LinkListRealize.vcxproj -> F:\程序\LinkListRealize\Debug\LinkListRealize.exe
