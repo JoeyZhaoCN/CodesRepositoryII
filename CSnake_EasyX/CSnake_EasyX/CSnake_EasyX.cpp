@@ -9,43 +9,43 @@
 #include <stdio.h>
 
 typedef struct snakenode{
-	int x, y;						//ÉßÉí½áµãµÄx£¬y×ø±ê
-	int direction;					//ÉßÍ·½áµãµÄÔË¶¯·½Ïò
-	struct snakenode *next,*pre;	//Ö¸ÏòÉßÉí½áµãµÄÇ°Çı¡¢ºó¼Ì½áµã
+	int x, y;			//è›‡èº«ç»“ç‚¹çš„xï¼Œyåæ ‡
+	int direction;			//è›‡å¤´ç»“ç‚¹çš„è¿åŠ¨æ–¹å‘
+	struct snakenode *next,*pre;	//æŒ‡å‘è›‡èº«ç»“ç‚¹çš„å‰é©±ã€åç»§ç»“ç‚¹
 	COLORREF snaCL;
 }snakenode;
 
 typedef struct {
-	int x, y;						//Ê³ÎïµÄx£¬y×ø±ê
-	int flag;						//ÅĞ¶ÏÊ³ÎïÊÇ·ñ±»³Ôµô,±»³ÔÎª1£¬Ã»±»³ÔÎª0
+	int x, y;			//é£Ÿç‰©çš„xï¼Œyåæ ‡
+	int flag;			//åˆ¤æ–­é£Ÿç‰©æ˜¯å¦è¢«åƒæ‰,è¢«åƒä¸º1ï¼Œæ²¡è¢«åƒä¸º0
 }food;
 
 /*
-	³õÊ¼»¯ÓÎÏ·£º´´½¨´°¿Ú£¬³õÊ¼»¯±äÁ¿
+	åˆå§‹åŒ–æ¸¸æˆï¼šåˆ›å»ºçª—å£ï¼Œåˆå§‹åŒ–å˜é‡
 */
 void initgame(snakenode*,snakenode*,food *fd,int*);
-void drawelcome();			//»æÖÆ³ö»¶Ó­½çÃæ
-void specification();		//ÓÎÏ·ËµÃ÷
-void drawranklist(int*);	//»æÖÆÅÅĞĞ°ñ
-void gameUI();				//ÓÎÏ·½çÃæ
+void drawelcome();		//ç»˜åˆ¶å‡ºæ¬¢è¿ç•Œé¢
+void specification();		//æ¸¸æˆè¯´æ˜
+void drawranklist(int*);	//ç»˜åˆ¶æ’è¡Œæ¦œ
+void gameUI();			//æ¸¸æˆç•Œé¢
 
 /*
-	ÓÎÏ·½øĞĞ¹ı³Ì
+	æ¸¸æˆè¿›è¡Œè¿‡ç¨‹
 */
 void gameproc(snakenode*,snakenode*,food*,int*);
-void drawsnake(snakenode*,snakenode*);				//»­Éß
-void drawfood(snakenode*, food*);					//»­Ê³Îï
-void controlsnake(snakenode*);						//²Ù×÷Éß
-void movesnake(snakenode*,snakenode*,snakenode*);	//ÒÆ¶¯Éß
-void createnode(snakenode**,snakenode*);			//³Ùµ½Ê³Îïºó£¬Éú³ÉÒ»¸öĞÂµÄÉßÉí½áµã
-int judegame(snakenode*);							//ÅĞ¶ÏÊÇ·ñ×²Ç½»òÕß×²µ½×Ô¼ºÉíÌå
-void drawscore(int*);								//»æÖÆ·ÖÊı
+void drawsnake(snakenode*,snakenode*);			//ç”»è›‡
+void drawfood(snakenode*, food*);			//ç”»é£Ÿç‰©
+void controlsnake(snakenode*);				//æ“ä½œè›‡
+void movesnake(snakenode*,snakenode*,snakenode*);	//ç§»åŠ¨è›‡
+void createnode(snakenode**,snakenode*);		//åƒåˆ°é£Ÿç‰©åï¼Œç”Ÿæˆä¸€ä¸ªæ–°çš„è›‡èº«ç»“ç‚¹
+int judegame(snakenode*);				//åˆ¤æ–­æ˜¯å¦æ’å¢™æˆ–è€…æ’åˆ°è‡ªå·±èº«ä½“
+void drawscore(int*);					//ç»˜åˆ¶åˆ†æ•°
 
 /* 
-	ÓÎÏ·½áÊø½çÃæ£ºÊÍ·Å×ÊÔ´£¬¿ØÖÆÑ­»·(ÖØĞÂ¿ªÊ¼»ò¹Ø±ÕÓÎÏ·)                        
+	æ¸¸æˆç»“æŸç•Œé¢ï¼šé‡Šæ”¾èµ„æºï¼Œæ§åˆ¶å¾ªç¯(é‡æ–°å¼€å§‹æˆ–å…³é—­æ¸¸æˆ)                        
 */
 int gameover(int*,int*);
-void updaterank(int*,int*);	//¸üĞÂÅÅĞĞ°ñ
+void updaterank(int*,int*);	//æ›´æ–°æ’è¡Œæ¦œ
 
 int main()
 {
@@ -63,7 +63,7 @@ int main()
 }
 
 /************************************************************************/
-/* ³õÊ¼»¯ÓÎÏ·£º´´½¨´°¿Ú£¬³õÊ¼»¯±äÁ¿                                          */
+/* åˆå§‹åŒ–æ¸¸æˆï¼šåˆ›å»ºçª—å£ï¼Œåˆå§‹åŒ–å˜é‡                                          */
 /************************************************************************/
 void initgame(snakenode *head,snakenode *tail,food *fd,int *ranklist) {
 	initgraph(1200, 800);
@@ -110,36 +110,36 @@ void initgame(snakenode *head,snakenode *tail,food *fd,int *ranklist) {
 		}
 	}
 }
-void drawelcome() {//»æÖÆ³ö»¶Ó­½çÃæ
+void drawelcome() {//ç»˜åˆ¶å‡ºæ¬¢è¿ç•Œé¢
 	setlinecolor(RGB(250, 250, 250)); 
 	setlinestyle(PS_SOLID,5);
 	rectangle(450, 235, 795, 295);
 	rectangle(520, 395, 725, 435);
 	rectangle(520, 470, 725, 510);
 	rectangle(520, 545, 725, 585);
-	settextstyle(30, 0, _T("ºÚÌå"));
+	settextstyle(30, 0, _T("é»‘ä½“"));
 	settextcolor(RGB(200, 75, 75));
-	outtextxy(465, 250, "ÄãºÃ ~ »¶Ó­À´µ½Ì°³ÔÉß");
-	outtextxy(525, 400, "  ¿ªÊ¼    S  ");
-	outtextxy(525, 475, "  ËµÃ÷    E  ");
-	outtextxy(525, 550, " ÅÅĞĞ°ñ   P  ");
-	settextstyle(20, 0, _T("ºÚÌå"));
-	outtextxy(700, 310, "×÷Õß£ºJoezeo");
+	outtextxy(465, 250, "ä½ å¥½ ~ æ¬¢è¿æ¥åˆ°è´ªåƒè›‡");
+	outtextxy(525, 400, "  å¼€å§‹    S  ");
+	outtextxy(525, 475, "  è¯´æ˜    E  ");
+	outtextxy(525, 550, " æ’è¡Œæ¦œ   P  ");
+	settextstyle(20, 0, _T("é»‘ä½“"));
+	outtextxy(700, 310, "ä½œè€…ï¼šJoezeo");
 	settextcolor(RGB(250, 250, 250));
-	settextstyle(18, 0, _T("ºÚÌå"));
-	outtextxy(500, 750, "ÓÑÇéÌáÊ¾£ºÇëÇĞ»»µôÖĞÎÄÊäÈë·¨");
+	settextstyle(18, 0, _T("é»‘ä½“"));
+	outtextxy(500, 750, "å‹æƒ…æç¤ºï¼šè¯·åˆ‡æ¢æ‰ä¸­æ–‡è¾“å…¥æ³•");
 }
-void specification() {//ÓÎÏ·ËµÃ÷
+void specification() {//æ¸¸æˆè¯´æ˜
 	cleardevice();
-	settextstyle(50, 0, _T("ºÚÌå"));
+	settextstyle(50, 0, _T("é»‘ä½“"));
 	settextcolor(RGB(255, 255, 255));
-	outtextxy(560, 100, "ËµÃ÷£º");
-	settextstyle(25, 0, _T("ºÚÌå"));
-	outtextxy(280, 300, "ÉÏÏÂ×óÓÒ¿ØÖÆÉßÒÆ¶¯£¬²»Òª×²µ½×Ô¼º»òÕßÇ½±Ú£¬¾¡Çé³ÔµôÊ³Îï°É~");
+	outtextxy(560, 100, "è¯´æ˜ï¼š");
+	settextstyle(25, 0, _T("é»‘ä½“"));
+	outtextxy(280, 300, "ä¸Šä¸‹å·¦å³æ§åˆ¶è›‡ç§»åŠ¨ï¼Œä¸è¦æ’åˆ°è‡ªå·±æˆ–è€…å¢™å£ï¼Œå°½æƒ…åƒæ‰é£Ÿç‰©å§~");
 	rectangle(515, 395, 720, 435);
-	settextstyle(30, 0, _T("ºÚÌå"));
+	settextstyle(30, 0, _T("é»‘ä½“"));
 	settextcolor(RGB(200, 75, 75));
-	outtextxy(520, 400, "  ·µ»Ø    B  ");
+	outtextxy(520, 400, "  è¿”å›    B  ");
 	while (1) {
 		int ch = _getch();
 		if (ch == 'b' || ch == 'B') {
@@ -149,24 +149,24 @@ void specification() {//ÓÎÏ·ËµÃ÷
 		}
 	}
 }
-void gameUI() {//ÓÎÏ·½çÃæ
+void gameUI() {//æ¸¸æˆç•Œé¢
 	cleardevice();
 	setlinecolor(RGB(150, 150, 150));
 	setlinestyle(PS_SOLID, 10);
 	rectangle(295, 45, 905, 655);
 }
-void drawranklist(int *ranklist) {//»æÖÆ³öÅÅĞĞ°ñ
+void drawranklist(int *ranklist) {//ç»˜åˆ¶å‡ºæ’è¡Œæ¦œ
 	int x = 530, y = 140;
 	char str[25];
 	cleardevice();
 	settextcolor(RGB(255, 255, 255));
-	settextstyle(50, 0, _T("ºÚÌå"));
-	outtextxy(540, 100, "ÅÅĞĞ°ñ");
+	settextstyle(50, 0, _T("é»‘ä½“"));
+	outtextxy(540, 100, "æ’è¡Œæ¦œ");
 	rectangle(515, 545, 720, 585);
-	settextstyle(30, 0, _T("ºÚÌå"));
+	settextstyle(30, 0, _T("é»‘ä½“"));
 	settextcolor(RGB(200, 75, 75));
-	outtextxy(520, 550, "  ·µ»Ø    B  ");
-	settextstyle(25, 0, _T("ºÚÌå"));
+	outtextxy(520, 550, "  è¿”å›    B  ");
+	settextstyle(25, 0, _T("é»‘ä½“"));
 	for (int i = 0; i < 5; i++) {
 		y += 60;
 		sprintf_s(str, "%d        %3d", i + 1, ranklist[i]);
@@ -183,7 +183,7 @@ void drawranklist(int *ranklist) {//»æÖÆ³öÅÅĞĞ°ñ
 }
 
 /************************************************************************/
-/* ÓÎÏ·½øĞĞ¹ı³Ì                                                            */
+/* æ¸¸æˆè¿›è¡Œè¿‡ç¨‹                                                            */
 /************************************************************************/
 void gameproc(snakenode *head,snakenode *tail,food *fd,int *score) {
 	snakenode *oritail = (snakenode *)malloc(sizeof(snakenode));
@@ -206,7 +206,7 @@ void gameproc(snakenode *head,snakenode *tail,food *fd,int *score) {
 	}
 	free(oritail);
 }
-void drawsnake(snakenode *head,snakenode *oritail) {
+void drawsnake(snakenode *head,snakenode *oritail) {//ç”»è›‡
 	snakenode *p = head;
 	setfillcolor(oritail->snaCL);
 	setlinecolor(oritail->snaCL);
@@ -218,7 +218,7 @@ void drawsnake(snakenode *head,snakenode *oritail) {
 		p = p->next;
 	}
 }
-void drawfood(snakenode *head, food *fd) {
+void drawfood(snakenode *head, food *fd) {//ç”»é£Ÿç‰©
 	if (fd->flag) {
 		srand((unsigned)time(NULL));
 		int X = 0, Y = 0;
@@ -241,14 +241,14 @@ void drawfood(snakenode *head, food *fd) {
 	fillcircle(fd->x, fd->y, 5);
 	fd->flag = 0;
 }
-void controlsnake(snakenode *head) {//²Ù×÷Éß
+void controlsnake(snakenode *head) {//æ“ä½œè›‡
 	int dirc;
 	if (_kbhit()) {
 		dirc = _getch();	
 		head->direction = dirc;	
 	}
 }
-void movesnake(snakenode *head, snakenode *tail,snakenode *oritail) {
+void movesnake(snakenode *head, snakenode *tail,snakenode *oritail) {//ç§»åŠ¨è›‡
 	snakenode *p = tail;
 	oritail->direction = 0;
 	oritail->next = NULL;
@@ -276,7 +276,7 @@ void movesnake(snakenode *head, snakenode *tail,snakenode *oritail) {
 		break;
 		}
 }
-void createnode(snakenode **head,snakenode *newnode) {//³Ùµ½Ê³Îïºó£¬Éú³ÉÒ»¸öĞÂµÄÉßÉí½áµã
+void createnode(snakenode **head,snakenode *newnode) {//åƒåˆ°é£Ÿç‰©åï¼Œç”Ÿæˆä¸€ä¸ªæ–°çš„è›‡èº«ç»“ç‚¹
 	newnode->direction = (*head)->direction;
 	newnode->next = *head;
 	newnode->pre = NULL;
@@ -304,7 +304,7 @@ void createnode(snakenode **head,snakenode *newnode) {//³Ùµ½Ê³Îïºó£¬Éú³ÉÒ»¸öĞÂµÄ
 	(*head)->pre = newnode;
 	*head = newnode;
 }
-int judegame(snakenode *head) {
+int judegame(snakenode *head) {//åˆ¤æ–­æ¸¸æˆæ˜¯å¦ç»“æŸï¼Œæ˜¯è¿”å›1ï¼Œå¦è¿”å›0
 	snakenode *p = head->next;
 	snakenode *tmp_H = head;
 	if (head->x < 310 || head->x >890 || head->y < 60 || head->y > 640)
@@ -315,19 +315,19 @@ int judegame(snakenode *head) {
 void drawscore(int *score) {
 	char str[25];
 	settextcolor(RGB(255, 255, 255));
-	settextstyle(25, 0, _T("ºÚÌå"));
-	sprintf_s(str, "·ÖÊı£º%3d", *score);
+	settextstyle(25, 0, _T("é»‘ä½“"));
+	sprintf_s(str, "åˆ†æ•°ï¼š%3d", *score);
 	outtextxy(60, 60, str);
 }
 
 /************************************************************************/
-/* ÓÎÏ·½áÊø½çÃæ£ºÊÍ·Å×ÊÔ´£¬¿ØÖÆÑ­»·(ÖØĞÂ¿ªÊ¼»ò¹Ø±ÕÓÎÏ·)                        */
+/* æ¸¸æˆç»“æŸç•Œé¢ï¼šé‡Šæ”¾èµ„æºï¼Œæ§åˆ¶å¾ªç¯(é‡æ–°å¼€å§‹æˆ–å…³é—­æ¸¸æˆ)                        */
 /************************************************************************/
 int gameover(int *ranklist,int *score) {
 	settextcolor(RGB(255, 255, 255));
-	settextstyle(25, 0, _T("ºÚÌå"));
-	outtextxy(550,280,"ÓÎÏ·½áÊø~");
-	outtextxy(450, 440, "ÖØĞÂ¿ªÊ¼/R    ÍË³öÓÎÏ·/E");
+	settextstyle(25, 0, _T("é»‘ä½“"));
+	outtextxy(550,280,"æ¸¸æˆç»“æŸ~");
+	outtextxy(450, 440, "é‡æ–°å¼€å§‹/R    é€€å‡ºæ¸¸æˆ/E");
 	updaterank(ranklist, score);
 	while (1) {
 		int ch = _getch();
@@ -337,7 +337,7 @@ int gameover(int *ranklist,int *score) {
 			return 1;
 	}
 }
-void updaterank(int *ranklist, int *score) {
+void updaterank(int *ranklist, int *score) {//æ›´æ–°æ’è¡Œæ¦œ
 	if (*(ranklist + 4) < *score)
 		*(ranklist + 4) = *score;
 	for (int i = 0; i < 4; i++) {
