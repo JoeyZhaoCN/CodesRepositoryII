@@ -1,19 +1,19 @@
 #include <windows.h>
-#define INITCAPACITY 10000  //RcPoint³õÊ¼ÈİÁ¿
-#define ADDCAPACITY 10000	//RcPointÔö¼ÓÈİÁ¿
+#define INITCAPACITY 10000 	 //RcPointåˆå§‹å®¹é‡
+#define ADDCAPACITY 10000	 //RcPointå¢åŠ å®¹é‡
 typedef struct {
 	int x;
 	int y;
 	int index;
 }Point;
 typedef struct {
-	Point *base;	//»ùµØÖ·
-	int curnum;		//µ±Ç°µãÊı
-	int maxnum;		//µ±Ç°×î´óÈİÄÉµãÊı
-}RcPoint;//´¢´æ»­ÏÂµÄµãµÄ×ø±ê
+	Point *base;	//åŸºåœ°å€
+	int curnum;	//å½“å‰ç‚¹æ•°
+	int maxnum;	//å½“å‰æœ€å¤§å®¹çº³ç‚¹æ•°
+}RcPoint;//å‚¨å­˜ç”»ä¸‹çš„ç‚¹çš„åæ ‡
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
-void AddRcPoint(RcPoint*);//Ôö¼ÓRcPointÈİÁ¿
+void AddRcPoint(RcPoint*);//å¢åŠ RcPointå®¹é‡
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
 	static char szWndClassName[] = "hellowin";
@@ -34,22 +34,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	wndclass.lpszClassName = szWndClassName;
 
 	if (!RegisterClass(&wndclass)) {
-		MessageBox(NULL, "×¢²áÊ§°Ü", "´íÎó", MB_ICONERROR);
+		MessageBox(NULL, "æ³¨å†Œå¤±è´¥", "é”™è¯¯", MB_ICONERROR);
 		return 0;
 	}
 
 	hwnd = CreateWindow(
 		szWndClassName,		//windows class name
-		"Joezeo",			//windows caption	
-		WS_OVERLAPPEDWINDOW,//windows style
+		"Joezeo",		//windows caption	
+		WS_OVERLAPPEDWINDOW,	//windows style
 		CW_USEDEFAULT,		//intial x position
 		CW_USEDEFAULT,		//intial y position
 		CW_USEDEFAULT,		//intial x size
 		CW_USEDEFAULT,		//intial y size
-		NULL,				//parent wnidow handle
-		NULL,				//window menu handle
-		hInstance,			//program instance handle
-		NULL);				//creation paramenter
+		NULL,			//parent wnidow handle
+		NULL,			//window menu handle
+		hInstance,		//program instance handle
+		NULL);			//creation paramenter
 	ShowWindow(hwnd, nShowCmd);
 	UpdateWindow(hwnd);
 
@@ -61,16 +61,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 }
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam,
-							LPARAM lparam) {//wparamÒÔ¶ş½øÖÆµÄ·½Ê½°üº¬Ğí¶à°´¼üĞÅÏ¢
-	HDC hdc;		//Éè±¸ÃèÊö±í¾ä±ú			//lparamÒÔ¶ş½øÖÆµÄ·½Ê½°üº¬Êó±êÎ»ÖÃĞÅÏ¢
+							LPARAM lparam) {//wparamä»¥äºŒè¿›åˆ¶çš„æ–¹å¼åŒ…å«è®¸å¤šæŒ‰é”®ä¿¡æ¯
+	HDC hdc;		//è®¾å¤‡æè¿°è¡¨å¥æŸ„			//lparamä»¥äºŒè¿›åˆ¶çš„æ–¹å¼åŒ…å«é¼ æ ‡ä½ç½®ä¿¡æ¯
 	PAINTSTRUCT ps;
 	RECT rect;
 
-	static Point PrePoint;	//Ç°Ò»¸öµã
+	static Point PrePoint;	//å‰ä¸€ä¸ªç‚¹
 	static int index = 0;
 	static HPEN hpen[3];
 	static RcPoint *rcPoint;
-	static int ldown = -1;	//¼ÇÂ¼Êó±ê×ó¼ü°´ÏÂ´ÎÊı
+	static int ldown = -1;	//è®°å½•é¼ æ ‡å·¦é”®æŒ‰ä¸‹æ¬¡æ•°
 	
 	switch (message) {
 	case WM_CREATE:
@@ -85,13 +85,13 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam,
 		}
 		
 		return 0;
-	case WM_KEYDOWN://¼ì²â°´¼ü
+	case WM_KEYDOWN://æ£€æµ‹æŒ‰é”®
 		if (VK_RETURN == wparam) {
 			InvalidateRect(hwnd, NULL, TRUE);
 			}
 		return 0;
 	case WM_MOUSEMOVE:
-		if (MK_LBUTTON & wparam) {//Êó±ê×ó¼ü±»³ÖĞø°´ÏÂ
+		if (MK_LBUTTON & wparam) {//é¼ æ ‡å·¦é”®è¢«æŒç»­æŒ‰ä¸‹
 			Point point;
 			hdc = GetDC(hwnd);
 			point.x = LOWORD(lparam);
@@ -114,8 +114,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam,
 		}
 		return 0;
 	case WM_LBUTTONDOWN:
-		int x = LOWORD(lparam);	//È¡µÍ×ÖÎ»
-		int y = HIWORD(lparam);//È¡¸ß×ÖÎ»
+		int x = LOWORD(lparam);	//å–ä½å­—ä½
+		int y = HIWORD(lparam);//å–é«˜å­—ä½
 		ldown++;
 		PrePoint.x = x;
 		PrePoint.y = y;
@@ -128,8 +128,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam,
 		(rcPoint + ldown)->curnum++;
 		return 0;
 	case WM_RBUTTONDOWN:
-		int tx = LOWORD(lparam);	//È¡µÍ×ÖÎ»
-		int ty = HIWORD(lparam);	//È¡¸ß×ÖÎ»
+		int tx = LOWORD(lparam);	//å–ä½å­—ä½
+		int ty = HIWORD(lparam);	//å–é«˜å­—ä½
 		index++;
 		if (index == 3) index = 0;
 		if ((rcPoint + ldown)->curnum == (rcPoint + ldown)->maxnum) {
@@ -140,8 +140,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam,
 		((rcPoint + ldown)->base + (rcPoint + ldown)->curnum)->index = index;
 		(rcPoint + ldown)->curnum++;
 		return 0;
-	case WM_PAINT://´°¿Ú±ØĞë½øĞĞÖØ»æÊ±,ÔÚÎŞĞ§ÇøÓò½øĞĞ»æÖÆ
-		hdc = BeginPaint(hwnd, &ps);//·µ»ØÉè±¸ÃèÊö±í¾ä±ú
+	case WM_PAINT://çª—å£å¿…é¡»è¿›è¡Œé‡ç»˜æ—¶,åœ¨æ— æ•ˆåŒºåŸŸè¿›è¡Œç»˜åˆ¶
+		hdc = BeginPaint(hwnd, &ps);//è¿”å›è®¾å¤‡æè¿°è¡¨å¥æŸ„
 		for (int j = 0; j < ldown + 1; j++) {
 			for (int i = 0; i < (rcPoint + j)->curnum - 1; i++) {
 				SelectObject(hdc, hpen[((rcPoint + j)->base + i)->index]);
