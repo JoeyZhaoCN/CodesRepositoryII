@@ -69,17 +69,21 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam,
 	static Point PrePoint;	//前一个点
 	static int index = 0;
 	static HPEN hpen[3];
-	static RcPoint rcPoint;
-	static int ldown = 0;	//记录鼠标左键按下次数
+	static RcPoint *rcPoint;
+	static int ldown = -1;	//记录鼠标左键按下次数
 	
 	switch (message) {
 	case WM_CREATE:
 		hpen[0] = CreatePen(PS_SOLID, 5, RGB(255, 0, 0));
 		hpen[1] = CreatePen(PS_SOLID, 10, RGB(0, 255, 0));
 		hpen[2] = CreatePen(PS_SOLID, 15, RGB(0, 0, 255));
-		rcPoint.base = (Point *)malloc(INITCAPACITY * sizeof(Point));
-		rcPoint.curnum = 0;
-		rcPoint.maxnum = INITCAPACITY;
+		rcPoint = (RcPoint *)malloc(100 * sizeof(RcPoint));
+		for (int i = 0; i < 100; i++) {
+			(rcPoint + i)->base = (Point *)malloc(INITCAPACITY * sizeof(Point));
+			(rcPoint + i)->curnum = 0;
+			(rcPoint + i)->maxnum = INITCAPACITY;
+		}
+		
 		return 0;
 	case WM_KEYDOWN://检测按键
 		if (VK_RETURN == wparam) {
@@ -87,19 +91,19 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam,
 			}
 		return 0;
 	case WM_MOUSEMOVE:
-		if (MK_LBUTTON & wparam) {//鼠标左键被按下
+		if (MK_LBUTTON & wparam) {//鼠标左键被持续按下
 			Point point;
 			hdc = GetDC(hwnd);
 			point.x = LOWORD(lparam);
 			point.y = HIWORD(lparam);
 
-			if (rcPoint.curnum == rcPoint.maxnum) {
+			if ((rcPoint + ldown)->curnum == (rcPoint + ldown)->maxnum) {
 				AddRcPoint(&rcPoint);
 			}
-			(rcPoint.base + rcPoint.curnum)->x = point.x;
-			(rcPoint.base + rcPoint.curnum)->y = point.y;
-			(rcPoint.base + rcPoint.curnum)->index = index;
-			rcPoint.curnum++;
+			((rcPoint + ldown)->base + (rcPoint + ldown)->curnum)->x = point.x;
+			((rcPoint + ldown)->base + (rcPoint + ldown)->curnum)->y = point.y;
+			((rcPoint + ldown)->base + (rcPoint + ldown)->curnum)->index = index;
+			(rcPoint + ldown)->curnum++;
 			
 			//SetPixel(hdc, point.x, point.y, RGB(255,0,0));
 			SelectObject(hdc, hpen[index]);
@@ -115,46 +119,37 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam,
 		ldown++;
 		PrePoint.x = x;
 		PrePoint.y = y;
-		if (ldown != 1) {//用来处理中途第n次按下鼠标左键，线段不连续的情况，n != 1
-			for (int i = 0; i < 2; i++) {
-				if (rcPoint.curnum == rcPoint.maxnum) {
-					AddRcPoint(&rcPoint);
-				}
-				(rcPoint.base + rcPoint.curnum)->x = (rcPoint.base + rcPoint.curnum - 1)->x;
-				(rcPoint.base + rcPoint.curnum)->y = (rcPoint.base + rcPoint.curnum - 1)->y;
-				(rcPoint.base + rcPoint.curnum)->index = (rcPoint.base + rcPoint.curnum - 1)->index;
-				rcPoint.curnum++;
-			}
-		}
-		if (rcPoint.curnum == rcPoint.maxnum) {
+		if ((rcPoint + ldown)->curnum == (rcPoint + ldown)->maxnum) {
 			AddRcPoint(&rcPoint);
 		}
-		(rcPoint.base + rcPoint.curnum)->x = PrePoint.x;
-		(rcPoint.base + rcPoint.curnum)->y = PrePoint.y;
-		(rcPoint.base + rcPoint.curnum)->index = index;
-		rcPoint.curnum++;
+		((rcPoint + ldown)->base + (rcPoint + ldown)->curnum)->x = PrePoint.x;
+		((rcPoint + ldown)->base + (rcPoint + ldown)->curnum)->y = PrePoint.y;
+		((rcPoint + ldown)->base + (rcPoint + ldown)->curnum)->index = index;
+		(rcPoint + ldown)->curnum++;
 		return 0;
 	case WM_RBUTTONDOWN:
 		int tx = LOWORD(lparam);	//取低字位
 		int ty = HIWORD(lparam);	//取高字位
 		index++;
 		if (index == 3) index = 0;
-		if (rcPoint.curnum == rcPoint.maxnum) {
+		if ((rcPoint + ldown)->curnum == (rcPoint + ldown)->maxnum) {
 			AddRcPoint(&rcPoint);
 		}
-		(rcPoint.base + rcPoint.curnum)->x = tx;
-		(rcPoint.base + rcPoint.curnum)->y = ty;
-		(rcPoint.base + rcPoint.curnum)->index = index;
-		rcPoint.curnum++;
+		((rcPoint + ldown)->base + (rcPoint + ldown)->curnum)->x = tx;
+		((rcPoint + ldown)->base + (rcPoint + ldown)->curnum)->y = ty;
+		((rcPoint + ldown)->base + (rcPoint + ldown)->curnum)->index = index;
+		(rcPoint + ldown)->curnum++;
 		return 0;
 	case WM_PAINT://窗口必须进行重绘时,在无效区域进行绘制
-		hdc = BeginPaint(hwnd, &ps);//返回设备描述表句柄		
-		for (int i = 0; i < rcPoint.curnum - 1; i ++) {
-			SelectObject(hdc, hpen[(rcPoint.base + i)->index]);
-			if(((rcPoint.base + i)->index != (rcPoint.base + i)->index) && i != 0)
-				SelectObject(hdc, hpen[(rcPoint.base + i + 1)->index]);
-			MoveToEx(hdc, (rcPoint.base + i)->x, (rcPoint.base + i)->y, NULL);
-			LineTo(hdc, (rcPoint.base + i + 1)->x, (rcPoint.base + i + 1)->y);
+		hdc = BeginPaint(hwnd, &ps);//返回设备描述表句柄
+		for (int j = 0; j < ldown + 1; j++) {
+			for (int i = 0; i < (rcPoint + j)->curnum - 1; i++) {
+				SelectObject(hdc, hpen[((rcPoint + j)->base + i)->index]);
+				if ((((rcPoint + j)->base + i)->index != ((rcPoint + j)->base + i)->index) && i != 0)
+					SelectObject(hdc, hpen[((rcPoint + j)->base + i + 1)->index]);
+				MoveToEx(hdc, ((rcPoint + j)->base + i)->x, ((rcPoint + j)->base + i)->y, NULL);
+				LineTo(hdc, ((rcPoint + j)->base + i + 1)->x, ((rcPoint + j)->base + i + 1)->y);
+			}
 		}
 		EndPaint(hwnd, &ps);
 		return 0;
