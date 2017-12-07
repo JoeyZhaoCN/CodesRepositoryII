@@ -9,3 +9,7 @@ class Person:
 
 p = Person('Joezeo')
 p.say_hi()
+
+
+def testitem():
+    pass
