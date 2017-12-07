@@ -28,6 +28,7 @@ class Robot:
         print('Greeting, my master call me {}'.format(self.name))
 
     # 装饰器，@classmethod 等价于调用 how_many = classmethod(how_many)
+    # 表示 how_many 方法是属于类的方法，不是对象的方法
     @classmethod
     def how_many(cls):
         """打印出当前的人口数量"""
