@@ -14,26 +14,43 @@ class DataBase():
             passwd='funkey2012',
             db='banques',
         )
-        self.cursor = self.connect.cursor
+        self.cursor = self.connect.cursor()
 
     def change_data(self):
         """数据库操作：
         修改数据
         """
-        sql = input('请输入sql修改操作语句 -->')
-        self.cursor.execute(sql)
-        self.connect.commit()
-        print('成功修改', cursor.rowcount, '条数据')
+        try:
+            sql = input('请输入sql修改操作语句 -->')
+            # cursor = self.connect.cursor
+            self.cursor.execute(sql)
+            self.connect.commit()
+            print('成功修改', self.cursor.rowcount, '条数据')
+            print('---------------------------------------')
+            print('\n')
+        except Exception:
+            print('语句输入错误，请检查后重新输入')
+            print('---------------------------------------')
+            print('\n')
 
     def query_data(self):
         """数据库操作：
         查询数据
         """
-        sql = input('请输入sql查询操作语句 -->')
-        self.cursor.execute(sql)
-        for row in cursor.fetchall():
-            print(row)
-        print('共查出', cursor.rowcount, '条数据')
+        try:
+            sql = str(input('请输入sql查询操作语句 -->'))
+            # cursor = self.connect.cursor
+            self.cursor.execute(sql)
+            for row in self.cursor.fetchall():
+                print(row)
+            print('共查出', self.cursor.rowcount, '条数据')
+            print('---------------------------------------')
+            print('\n')
+        except Exception:
+            print('语句输入错误，请检查后重新输入')
+            print('---------------------------------------')
+            print('\n')
+
 
     def close_connect(self):
         """数据库操作：

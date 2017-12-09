@@ -8,7 +8,7 @@ class BanquesMain:
 
     def start(self):
         while True:
-            print('1.修改数据：')
+            print('1.修改数据')
             print('2.查询数据')
             print('3.关闭连接')
             flag = int(input('请选择操作 -->'))
