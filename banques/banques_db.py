@@ -1,6 +1,7 @@
 # coding=UTF-8
 import pymysql.cursors
 
+
 class DataBase():
     def __init__(self):
         """初始化
