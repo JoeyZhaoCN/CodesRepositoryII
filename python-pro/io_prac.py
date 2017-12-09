@@ -10,7 +10,7 @@ def remove_forbideen(text):
 
 
 def reverse(text):
-    return text[::-1]
+    return text[::-1]# 反转字符串
 
 
 def is_palindrome(text):

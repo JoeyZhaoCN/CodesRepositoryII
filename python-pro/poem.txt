@@ -1,0 +1,4 @@
+Programing is fun
+When the Work is done
+if you wanna make your work also fun:
+    use Python!
