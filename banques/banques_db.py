@@ -16,6 +16,13 @@ class DataBase():
         )
         self.cursor = self.connect.cursor()
 
+    def _end_state(self):
+        """结束语句
+        用于美化输出文本
+        """
+        print('---------------------------------------')
+        print('\n')
+
     def change_data(self):
         """数据库操作：
         修改数据
@@ -26,12 +33,11 @@ class DataBase():
             self.cursor.execute(sql)
             self.connect.commit()
             print('成功修改', self.cursor.rowcount, '条数据')
-            print('---------------------------------------')
-            print('\n')
+            DataBase()._end_state()
+
         except Exception:
             print('语句输入错误，请检查后重新输入')
-            print('---------------------------------------')
-            print('\n')
+            DataBase()._end_state()
 
     def query_data(self):
         """数据库操作：
@@ -44,12 +50,10 @@ class DataBase():
             for row in self.cursor.fetchall():
                 print(row)
             print('共查出', self.cursor.rowcount, '条数据')
-            print('---------------------------------------')
-            print('\n')
+            DataBase()._end_state()
         except Exception:
             print('语句输入错误，请检查后重新输入')
-            print('---------------------------------------')
-            print('\n')
+            DataBase()._end_state()
 
 
     def close_connect(self):
