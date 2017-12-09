@@ -22,7 +22,7 @@ class DataBase():
         """
         sql = input('请输入sql修改操作语句 -->')
         self.cursor.execute(sql)
-        connect.commit()
+        self.connect.commit()
         print('成功修改', cursor.rowcount, '条数据')
 
     def query_data(self):
@@ -30,7 +30,7 @@ class DataBase():
         查询数据
         """
         sql = input('请输入sql查询操作语句 -->')
-        cursor.execute(sql)
+        self.cursor.execute(sql)
         for row in cursor.fetchall():
             print(row)
         print('共查出', cursor.rowcount, '条数据')
