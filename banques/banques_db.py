@@ -21,7 +21,7 @@ class DataBase():
         修改数据
         """
         try:
-            sql = input('请输入sql修改操作语句 -->')
+            sql = str(input('请输入sql修改操作语句 -->'))
             # cursor = self.connect.cursor
             self.cursor.execute(sql)
             self.connect.commit()
