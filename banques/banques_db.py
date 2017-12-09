@@ -11,7 +11,7 @@ class DataBase():
             host='localhost',
             port=3306,
             user='root',
-            passwd='***********',
+            passwd='funkey2012',
             db='banques',
         )
         self.cursor = self.connect.cursor()
