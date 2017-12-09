@@ -34,3 +34,11 @@ class DataBase():
         for row in cursor.fetchall():
             print(row)
         print('共查出', cursor.rowcount, '条数据')
+
+    def close_connect(self):
+        """数据库操作：
+        关闭连接
+        """
+        self.cursor.close()
+        self.connect.close()
+        print('已关闭数据库连接')
