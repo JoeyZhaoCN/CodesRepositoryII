@@ -48,13 +48,15 @@ class DataBase():
             # cursor = self.connect.cursor
             self.cursor.execute(sql)
             for row in self.cursor.fetchall():
-                print(row)
+                for data in row:
+                    print(data, end='\t')
+                print('\n')
             print('共查出', self.cursor.rowcount, '条数据')
             DataBase()._end_state()
+
         except Exception:
             print('语句输入错误，请检查后重新输入')
             DataBase()._end_state()
-
 
     def close_connect(self):
         """数据库操作：
