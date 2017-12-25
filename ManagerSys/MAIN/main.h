@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include\
 "F:\workspace\gits\CodesRepository\ManagerSys\UI\sysui.h"
+#include\
+"F:\workspace\gits\CodesRepository\ManagerSys\INFO\stuifo.h"
 
 #ifdef __cplusplus
 extern "C"{
@@ -12,13 +14,18 @@ extern "C"{
 
 typedef struct{
 
-    int items_chose;
+    int _chose;
 
 }SYS, * PSYS;
+
+void
+items_chose(PSYS);
 
 PSYS
 init_sys();
 
+void
+page_control(PSYS, PSTUIFO);
 
 #ifdef __cplusplus
 }

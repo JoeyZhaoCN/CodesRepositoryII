@@ -5,6 +5,8 @@
 #include <conio.h>
 #include\
 "F:\workspace\gits\CodesRepository\ManagerSys\MAIN\main.h"
+#include\
+"F:\workspace\gits\CodesRepository\ManagerSys\INFO\stuifo.h"
 
 #ifdef __cplusplus
 extern "C"{
@@ -13,8 +15,8 @@ extern "C"{
 void
 show_sysui();
 
-int
-items_chose(PSYS);
+void
+show_grade_ui(PSTUIFO);
 
 #ifdef __cplusplus
 }

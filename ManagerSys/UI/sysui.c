@@ -5,6 +5,7 @@
 void
 show_sysui(){
 
+    system("cls");
     printf("----------------------------------------------------\n");
     printf("|            students infomation system            |\n");
     printf("|                                                  |\n");
@@ -18,14 +19,22 @@ show_sysui(){
 
 }
 
-int
-items_chose(PSYS sys){
 
-    sys->items_chose = (int)getch();
+void
+show_grade_ui(PSTUIFO pifo){
 
-    if(sys->items_chose < 1 || sys->items_chose > 3)
-        return 0;
+    int _flag;
 
-    return 1;
+    system("cls");
+
+    printf("push b/B back to main menu.");
+
+    while(1){
+
+        _flag = getch();
+        if(_flag == 'b' || _flag == 'B')
+            break;
+
+    }
 
 }
