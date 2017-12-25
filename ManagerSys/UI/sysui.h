@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <conio.h>
+#include <assert.h>
 #include\
 "F:\workspace\gits\CodesRepository\ManagerSys\MAIN\main.h"
 #include\
@@ -17,6 +18,9 @@ show_sysui();
 
 void
 show_grade_ui(PSTUIFO);
+
+void
+add_stuifo_ui(PSTUIFO);
 
 #ifdef __cplusplus
 }

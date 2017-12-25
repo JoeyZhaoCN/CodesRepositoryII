@@ -2,6 +2,9 @@
 #define __STU_IFO_H__
 
 #include <stdlib.h>
+#include <assert.h>
+#include <stdio.h>
+#include <string.h>
 
 #ifdef __cplusplus
 extern "C"{
@@ -10,8 +13,8 @@ extern "C"{
 typedef struct STU{
 
     unsigned int _id;
-    char * _name;
-    char * _sex; // m(man)/w(woman)
+    char _name[20];
+    char _sex;   // m(man)/w(woman)
     int _mGrade; // math grade
     int _eGrade; // englih grade
     struct STU * _next;
@@ -30,6 +33,11 @@ typedef struct{
 PSTUIFO
 init_stuifo();
 
+void
+free_stuifo(PSTUIFO);
+
+void
+add_stu_to_stuifo(PSTUIFO);
 
 #ifdef __cplusplus
 }

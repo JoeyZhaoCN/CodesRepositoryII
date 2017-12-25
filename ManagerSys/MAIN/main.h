@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #include\
 "F:\workspace\gits\CodesRepository\ManagerSys\UI\sysui.h"
 #include\
@@ -23,6 +24,9 @@ items_chose(PSYS);
 
 PSYS
 init_sys();
+
+void
+free_sys(PSYS);
 
 void
 page_control(PSYS, PSTUIFO);
