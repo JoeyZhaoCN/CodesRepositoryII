@@ -21,9 +21,15 @@ $(wildcard F:/workspace/libs/data.struct.lib/*.h)
 # $@ 表示当前生成目标
 # $^ 表示所有依赖项
 # $< 表示第一个依赖项
+all : Demo tesing.obj
+.PHONY : all
+
 Demo : $(OBJS) $(LIB)
 	$(CC) $@ $^
 #$(LIBS)
+
+tesing.obj : ../MAIN/main.c ../MAIN/main.h
+	gcc -c $< -o $@
 
 $(OBJS) : $(SOURCE) $(HEADER)
 	$(LINK) $< -o $@
