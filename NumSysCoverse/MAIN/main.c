@@ -1,5 +1,4 @@
 #include "main.h"
-#pragma comment(lib, "F:/workspace/libs/data.struct.lib/DataStruct.lib")
 
 int main(int argc, char *argv[]){
 
@@ -29,6 +28,8 @@ NumSysConverse(const int _arg, const int _numsys){
         printf("%d", tmp);
 
     }
+
+    printf("\n");
 
     DestroyStack(psta);
 
