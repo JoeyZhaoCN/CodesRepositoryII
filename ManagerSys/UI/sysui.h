@@ -22,6 +22,9 @@ show_grade_ui(PSTUIFO);
 void
 add_stuifo_ui(PSTUIFO);
 
+void
+modify_grade_ui(PSTUIFO);
+
 #ifdef __cplusplus
 }
 #endif

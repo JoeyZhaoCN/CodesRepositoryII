@@ -14,3 +14,6 @@ $(OBJS):$(SOURCE) $(HEADER)
 
 run:
 	Demo $(ARGS)
+
+clean:
+	del *.o

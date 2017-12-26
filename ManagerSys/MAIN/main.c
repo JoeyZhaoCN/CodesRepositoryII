@@ -84,6 +84,7 @@ page_control(PSYS psys, PSTUIFO pifo){
         break;
 
     case '3':
+        modify_grade_ui(pifo);
         break;
 
     }

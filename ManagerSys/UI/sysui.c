@@ -100,3 +100,29 @@ add_stuifo_ui(PSTUIFO pifo){
     }
 
 }
+
+
+void
+modify_grade_ui(PSTUIFO pifo){
+
+    assert(pifo != NULL);
+
+    int _flag;
+
+    show_title();
+
+    modify_stu_grades(pifo);
+
+    printf("\npush b/B back to main menu.\n");
+
+    while (1) {
+
+        _flag = getch();
+        if (_flag == 'b' || _flag == 'B')
+            return;
+        if (_flag == 'r' || _flag == 'R')
+            break;
+
+    }
+
+}

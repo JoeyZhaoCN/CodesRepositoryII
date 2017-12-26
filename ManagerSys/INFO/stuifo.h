@@ -5,6 +5,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
+#include <conio.h>
 
 #ifdef __cplusplus
 extern "C"{
@@ -38,6 +39,9 @@ free_stuifo(PSTUIFO);
 
 void
 add_stu_to_stuifo(PSTUIFO);
+
+void
+modify_stu_grades(PSTUIFO);
 
 #ifdef __cplusplus
 }

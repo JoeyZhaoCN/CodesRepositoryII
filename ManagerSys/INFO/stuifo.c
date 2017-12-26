@@ -1,8 +1,13 @@
 #include\
 "F:\workspace\gits\CodesRepository\ManagerSys\INFO\stuifo.h"
 
+/* static methods. */
+
 static PSTU
 add_stu();
+
+static PSTU
+serch_id(PSTUIFO, unsigned int);
 
 static PSTU
 add_stu(){
@@ -54,6 +59,46 @@ add_stu(){
 
 }
 
+
+static PSTU
+serch_id(PSTUIFO pifo, unsigned int _id){
+
+    assert(pifo != NULL);
+
+    if (_id < 0) {
+
+        printf("\nerror:please input the right id.\n");
+        return NULL;
+
+    }
+
+    if (pifo->_stucnt == 0) {
+
+        printf("\nsorry, the student's count is 0.\n");
+        return NULL;
+
+    }
+
+    PSTU src = pifo->_head;
+
+    while (src != NULL) {
+
+        if (src->_id == _id) {
+
+            return src;
+
+        }
+
+        src = src->_next;
+
+    }
+
+    return NULL;
+
+}
+
+
+/* interface methods. */
 
 PSTUIFO
 init_stuifo(){
@@ -116,5 +161,57 @@ add_stu_to_stuifo(PSTUIFO pifo){
     }
 
     pifo->_stucnt++;
+
+}
+
+
+void
+modify_stu_grades(PSTUIFO pifo){
+
+    assert(pifo != NULL);
+
+    int _flag;
+    unsigned int _id;
+    PSTU src = NULL;
+
+    printf("please input the student's id:");
+    scanf("%u", &_id);
+
+    src = serch_id(pifo, _id);
+    if (src == NULL) {
+
+        printf("look up failed.\n");
+        return;
+
+    }
+
+    while (1) {
+
+        printf("please input you will modify grade.(1.math\t2.english)\n");
+        _flag = getch();
+
+        if (_flag == '1' || _flag == '2')
+            break;
+
+    }
+
+    switch (_flag) {
+
+    case '1':
+
+        printf("input the new math grade:");
+        scanf("%d", &(src->_mGrade));
+
+        break;
+    case '2':
+
+        printf("input the new english grade:");
+        scanf("%d", &(src->_eGrade));
+
+        break;
+
+    }
+
+    printf("modify successful.\n");
 
 }
