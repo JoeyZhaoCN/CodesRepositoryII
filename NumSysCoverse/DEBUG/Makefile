@@ -1,8 +1,10 @@
-CC		= gcc -o
-LINK	= gcc -c -o
+CC  	= gcc -o
+LINK	= gcc -c
+# -MM自动找寻源文件中的头文件包含关系，且不包括标准库
 
 OBJS	= main.obj
-LIB 	= dtastc.obj # 连接库出了问题，我在这里直接使用了obj文件，发现可行
+LIB 	= dtastc.obj
+# 连接库出了问题，我在这里直接使用了obj文件，发现可行
 
 SOURCE	= $(wildcard ../MAIN/*.c)
 
@@ -19,11 +21,12 @@ $(wildcard F:/workspace/libs/data.struct.lib/*.h)
 # $@ 表示当前生成目标
 # $^ 表示所有依赖项
 # $< 表示第一个依赖项
-Demo : $(OBJS) $(LIB) #F:/workspace/libs/data.struct.lib/DataStruct.lib
-	$(CC) $@ $^ #$(LIBS)
+Demo : $(OBJS) $(LIB)
+	$(CC) $@ $^
+#$(LIBS)
 
 $(OBJS) : $(SOURCE) $(HEADER)
-	$(LINK) $@ $<
+	$(LINK) $< -o $@
 
 run:
 	Demo $(ARGS)
