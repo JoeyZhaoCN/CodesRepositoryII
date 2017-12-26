@@ -11,8 +11,8 @@ show_title(){
     printf("----------------------------------------------------\n");
     printf("|            students infomation system            |\n");
     printf("|                                                  |\n");
-    printf("|            editor:         JOEZEO                |\n");
-    printf("|            VERSION:        0.1.0                 |\n");
+    printf("|            editor:             JOEZEO            |\n");
+    printf("|            VERSION:            0.1.0             |\n");
     printf("----------------------------------------------------\n");
 
 }
@@ -46,11 +46,11 @@ show_grade_ui(PSTUIFO pifo){
 
         PSTU cur = pifo->_head;
 
-        printf("\nid\tname\tsex\tmath\teng\n");
+        printf("\nid\t\tname\t\tsex\tmath\teng\n");
 
         while (cur != NULL) {
 
-            printf("%u\t%s\t%c\t%d\t%d\n", cur->_id, cur->_name,
+            printf("%u\t\t%s\t\t%c\t%d\t%d\n", cur->_id, cur->_name,
                     cur->_sex, cur->_mGrade, cur->_eGrade);
             cur = cur->_next;
 
