@@ -12,7 +12,7 @@ HEADER	= $(wildcard ../MAIN/*.h) \
 $(wildcard F:/workspace/libs/data.struct.lib/*.h)
 
 # -L 后跟库所在目录
-# -l 后跟库明
+# -l 后跟库名
 # 注意：-L -l 之间不要有空格
 
 #LIBS	= -L/F:/workspace/libs/data.struct.lib-lDataStruct
