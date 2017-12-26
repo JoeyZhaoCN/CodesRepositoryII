@@ -46,7 +46,7 @@ show_grade_ui(PSTUIFO pifo){
 
         PSTU cur = pifo->_head;
 
-        printf("id\tname\tsex\tmath\teng\n");
+        printf("\nid\tname\tsex\tmath\teng\n");
 
         while (cur != NULL) {
 
