@@ -6,6 +6,7 @@ extern "C"{
 #endif
 
 #include <stdio.h>
+#include <conio.h>
 #include "F:/workspace/libs/data.struct.lib/dtastc.h"
 //#pragma comment(lib, "F:/workspace/libs/data.struct.lib/DataStruct.lib")
 

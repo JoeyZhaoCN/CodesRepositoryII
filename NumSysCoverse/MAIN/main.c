@@ -2,7 +2,27 @@
 
 int main(int argc, char *argv[]){
 
-    NumSysConverse(158, 2);
+    int arg;
+    int sys;
+
+    while (1) {
+
+        system("cls");
+        printf("please input a number:");
+        scanf("%d", &arg);
+        printf("please input conversion number system:");
+        scanf("%d", &sys);
+        NumSysConverse(arg, sys);
+
+        printf("\nexit program?\ne/E to exit.\npush other key to continue.");
+
+        arg = getch();
+        if (arg == 'e' || arg == 'E')
+            break;
+
+    }
+
+
     return 0;
 
 }
