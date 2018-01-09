@@ -10,7 +10,7 @@ HEADER	= $(wildcard ../MAIN/*.h) $(wildcard ../MAZE/*.h) \
 $(wildcard F:/workspace/libs/data.struct.lib/*.h)
 
 MazePath : $(OBJS) $(LIB)
-	CC $@ $^
+	$(CC) $@ $^
 
 $(OBJS) : $(SOURCE) $(HEADER)
 	$(LINK) $< -o $@
