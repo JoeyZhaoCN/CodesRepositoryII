@@ -1,5 +1,5 @@
 CC  	= gcc -o
-LINK	= gcc -c
+LINK	= gcc -c -o
 
 OBJS	= main.obj maze.obj
 LIB 	= dtastc.obj
@@ -13,7 +13,7 @@ MazePath : $(OBJS) $(LIB)
 	$(CC) $@ $^
 
 $(OBJS) : $(SOURCE) $(HEADER)
-	$(LINK) $< -o $@
+	$(LINK) $@ $<
 
 run :
 	MazePath $(ARGS)
