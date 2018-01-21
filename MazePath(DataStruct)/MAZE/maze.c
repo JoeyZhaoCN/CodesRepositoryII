@@ -1,7 +1,8 @@
-#include "F:/workspace/gits/CodesRepository/MazePath(DataStruct)/MAZE/maze.h"
+//#include "F:/workspace/gits/CodesRepository/MazePath(DataStruct)/MAZE/maze.h"
+#include "maze.h"
 
 PMAZE
-InitMaze () {
+InitMaze() {
 
     PMAZE pmaze = (PMAZE)malloc(sizeof(MAZE));
     if (!pmaze)
@@ -70,7 +71,7 @@ InitMaze () {
 // 初始化迷宫
 
 Status
-FreeMaze(PMAZE _pmaze){
+FreeMaze(PMAZE _pmaze) {
 
     assert(_pmaze != NULL);
 

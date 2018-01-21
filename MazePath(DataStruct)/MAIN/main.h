@@ -7,8 +7,9 @@ extern "C"{
 
 #include <stdio.h>
 #include <conio.h>
-#include "F:/workspace/libs/data.struct.lib/dtastc.h"
+// #include "F:/workspace/libs/data.struct.lib/dtastc.h"
 #include "F:/workspace/gits/CodesRepository/MazePath(DataStruct)/MAZE/maze.h"
+
 // #pragma comment(lib, "F:/workspace/libs/data.struct.lib/DataStruct.lib")
 
 #ifdef __cplusplus

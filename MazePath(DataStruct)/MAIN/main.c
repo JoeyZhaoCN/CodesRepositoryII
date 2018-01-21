@@ -1,6 +1,7 @@
-#include "F:/workspace/gits/CodesRepository/MazePath(DataStruct)/MAIN/main.h"
+//#include "F:/workspace/gits/CodesRepository/MazePath(DataStruct)/MAIN/main.h"
+#include "main.h"
 
-int main(int argc, char *argv[]){
+int main(int argc, char *argv[]) {
 
     PMAZE pmaze = InitMaze();
 
