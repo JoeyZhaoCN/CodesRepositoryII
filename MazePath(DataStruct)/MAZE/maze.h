@@ -7,13 +7,14 @@ extern "C"{
 
 #include <stdlib.h>
 #include <assert.h>
+#include "F:/workspace/libs/data.struct.lib/dtastc.h"
 
 // 状态码定义 //
-#define TRUE      1
-#define FALSE     0
-#define SUCCESS   1
-#define ERROR    -1
-#define OVERFLOW -2
+// #define TRUE      1
+// #define FALSE     0
+// #define SUCCESS   1
+// #define ERROR    -1
+// #define OVERFLOW -2
 
 typedef int Status;
 
