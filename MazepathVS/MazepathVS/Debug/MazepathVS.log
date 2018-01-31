@@ -1,0 +1,4 @@
+﻿  main.c
+c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\wingdi.h(118): warning C4005: “ERROR”: 宏重定义
+  f:\workspace\libs\data.struct.lib\dtastc.h(34): note: 参见“ERROR”的前一个定义
+f:\workspace\gits\codesrepository\mazepathvs\mazepathvs\main.c(139): error C2088: “==”: 对于 struct 非法
