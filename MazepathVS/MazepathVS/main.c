@@ -4,7 +4,18 @@ int main (int argc, char *argv[]) {
 
 	PMAZE pmaze = Initmaze();
 
+	POINT start;
+	POINT ending;
+
+	start.x = 1;
+	start.y = 1;
+
+	ending.x = 8;
+	ending.y = 8;
+
 	DrawMaze(pmaze);
+
+	MazePath(pmaze, start, ending);
 
 	system("pause");
 	return 0;
@@ -41,6 +52,7 @@ Initmaze() {
 			(*(pmaze->m_blocks + i) + j)->m_down = FALSE;
 			(*(pmaze->m_blocks + i) + j)->m_left = FALSE;
 			(*(pmaze->m_blocks + i) + j)->m_over = FALSE;
+			(*(pmaze->m_blocks + i) + j)->m_flag = FALSE;
 
 		}
 
@@ -124,23 +136,122 @@ MazePath(PMAZE pmaze, POINT start, POINT ending) {
 
 	assert(pmaze != NULL);
 
+	BOOL bingo = FALSE;
+
 	PBLOCK curpos = (*(pmaze->m_blocks + start.x) + start.y);
 
-	PSTACK buffer = InitStack();
+	PSTACK buffer = InitStack(sizeof(PBLOCK));
 
 	do {
 
 		if (curpos->m_pass) {
 
-			Push(buffer, curpos, sizeof(BLOCK));
+			curpos->m_flag = TRUE;
 
-			//GetTop(buffer, curpos, sizeof(BLOCK));
+			Push(buffer, &curpos, sizeof(PBLOCK));
 
-			if (curpos->m_pos == ending)
+			if (curpos->m_pos.x == ending.x && curpos->m_pos.y == ending.y) {
+
+				bingo = TRUE;
+
 				break;
+
+			}
+
+			NextPos(curpos, pmaze);
+
+		}
+		else {
+
+			//if(!curpos->m_pass)
+
+			if (!StackEmpty(buffer) && curpos->m_over) { // 若栈不空，且栈顶四周已探索完毕
+
+				Pop(buffer, curpos, sizeof(PBLOCK));
+
+				GetTop(buffer, curpos, sizeof(PBLOCK));
+
+			}
 
 		}
 
 	} while (!StackEmpty(buffer));
+
+	if (bingo) {
+
+		printf("成功到达终点~\n");
+
+	}
+	else {
+
+		printf("到达终点失败~\n");
+
+	}
+
+	return 0;
+
+}
+
+int
+NextPos(PBLOCK pblock, PMAZE pmaze) {
+
+	assert(pblock != NULL);
+	assert(pmaze != NULL);
+
+	if (!pblock->m_up) {
+
+		pblock->m_up = TRUE;
+
+		if (pblock->m_pos.y > 0) {
+
+			if(!(*(pmaze->m_blocks + pblock->m_pos.x) + pblock->m_pos.y - 1)->m_flag)
+				pblock = (*(pmaze->m_blocks + pblock->m_pos.x) + pblock->m_pos.y - 1);
+
+		}	
+
+	}
+	else if (!pblock->m_right) {
+
+		pblock->m_right = TRUE;
+
+		if (pblock->m_pos.x < 9) {
+
+			if (!(*(pmaze->m_blocks + pblock->m_pos.x + 1) + pblock->m_pos.y)->m_flag)
+				pblock = (*(pmaze->m_blocks + pblock->m_pos.x + 1) + pblock->m_pos.y);
+
+		}
+
+	}
+	else if (!pblock->m_down) {
+
+		pblock->m_down = TRUE;
+
+		if (pblock->m_pos.y < 9) {
+
+			if (!(*(pmaze->m_blocks + pblock->m_pos.x) + pblock->m_pos.y + 1)->m_flag)
+				pblock = (*(pmaze->m_blocks + pblock->m_pos.x) + pblock->m_pos.y + 1);
+
+		}
+
+	}
+	else if (!pblock->m_left) {
+
+		pblock->m_left = TRUE;
+
+		if (pblock->m_pos.x > 0) {
+
+			if (!(*(pmaze->m_blocks + pblock->m_pos.x - 1) + pblock->m_pos.y)->m_flag)
+				pblock = (*(pmaze->m_blocks + pblock->m_pos.x - 1) + pblock->m_pos.y);
+
+		}
+
+	}
+	else {
+
+		pblock->m_over = FALSE;
+
+	}
+
+	return 0;
 
 }

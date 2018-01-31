@@ -14,8 +14,8 @@ extern "C" {
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
-#include <dtastc.h>
 #include <windows.h>
+#include "dtastc.h"
 
 
 /*
@@ -27,7 +27,8 @@ typedef struct {
 
 	POINT m_pos;
 
-	BOOL m_pass;
+	BOOL m_pass; // 是否是路
+	BOOL m_flag; // 是否来过
 
 	BOOL m_up;
 	BOOL m_right;
@@ -59,6 +60,9 @@ DrawMaze(PMAZE);
 
 int
 MazePath(PMAZE, POINT, POINT);
+
+int
+NextPos(PBLOCK, PMAZE);
 
 #ifdef __cplusplus
 }
