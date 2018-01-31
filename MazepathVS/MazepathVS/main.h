@@ -62,7 +62,7 @@ int
 MazePath(PMAZE, POINT, POINT);
 
 int
-NextPos(PBLOCK, PMAZE);
+NextPos(PBLOCK *, PMAZE);
 
 #ifdef __cplusplus
 }

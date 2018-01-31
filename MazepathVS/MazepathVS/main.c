@@ -146,9 +146,13 @@ MazePath(PMAZE pmaze, POINT start, POINT ending) {
 
 		if (curpos->m_pass) {
 
-			curpos->m_flag = TRUE;
+			if (!curpos->m_flag) {
 
-			Push(buffer, &curpos, sizeof(PBLOCK));
+				curpos->m_flag = TRUE;
+
+				Push(buffer, curpos, sizeof(PBLOCK));
+
+			}
 
 			if (curpos->m_pos.x == ending.x && curpos->m_pos.y == ending.y) {
 
@@ -158,16 +162,19 @@ MazePath(PMAZE pmaze, POINT start, POINT ending) {
 
 			}
 
-			NextPos(curpos, pmaze);
+			NextPos(&curpos, pmaze);
 
 		}
 		else {
 
-			//if(!curpos->m_pass)
-
 			if (!StackEmpty(buffer) && curpos->m_over) { // ÈôÕ»²»¿Õ£¬ÇÒÕ»¶¥ËÄÖÜÒÑÌ½Ë÷Íê±Ï
 
 				Pop(buffer, curpos, sizeof(PBLOCK));
+
+				GetTop(buffer, curpos, sizeof(PBLOCK));
+
+			}
+			if(!curpos->m_pass){
 
 				GetTop(buffer, curpos, sizeof(PBLOCK));
 
@@ -193,62 +200,87 @@ MazePath(PMAZE pmaze, POINT start, POINT ending) {
 }
 
 int
-NextPos(PBLOCK pblock, PMAZE pmaze) {
+NextPos(PBLOCK * pblock, PMAZE pmaze) {
 
 	assert(pblock != NULL);
 	assert(pmaze != NULL);
 
-	if (!pblock->m_up) {
+	if (!(*pblock)->m_up) {
 
-		pblock->m_up = TRUE;
+		(*pblock)->m_up = TRUE;
 
-		if (pblock->m_pos.y > 0) {
+		if ((*pblock)->m_pos.x > 0) {
 
-			if(!(*(pmaze->m_blocks + pblock->m_pos.x) + pblock->m_pos.y - 1)->m_flag)
-				pblock = (*(pmaze->m_blocks + pblock->m_pos.x) + pblock->m_pos.y - 1);
+			if (!(*(pmaze->m_blocks + (*pblock)->m_pos.x - 1) + (*pblock)->m_pos.y)->m_flag) {
+
+				(*pblock) = (*(pmaze->m_blocks + (*pblock)->m_pos.x - 1) + (*pblock)->m_pos.y);
+
+				(*pblock)->m_flag = TRUE;
+
+			}
+				
 
 		}	
 
 	}
-	else if (!pblock->m_right) {
+	else if (!(*pblock)->m_right) {
 
-		pblock->m_right = TRUE;
+		(*pblock)->m_right = TRUE;
 
-		if (pblock->m_pos.x < 9) {
+		if ((*pblock)->m_pos.y < 9) {
 
-			if (!(*(pmaze->m_blocks + pblock->m_pos.x + 1) + pblock->m_pos.y)->m_flag)
-				pblock = (*(pmaze->m_blocks + pblock->m_pos.x + 1) + pblock->m_pos.y);
+			if (!(*(pmaze->m_blocks + (*pblock)->m_pos.x) + (*pblock)->m_pos.y + 1)->m_flag) {
 
-		}
+				(*pblock) = (*(pmaze->m_blocks + (*pblock)->m_pos.x + 1) + (*pblock)->m_pos.y + 1);
 
-	}
-	else if (!pblock->m_down) {
+				(*pblock)->m_flag = TRUE;
 
-		pblock->m_down = TRUE;
 
-		if (pblock->m_pos.y < 9) {
-
-			if (!(*(pmaze->m_blocks + pblock->m_pos.x) + pblock->m_pos.y + 1)->m_flag)
-				pblock = (*(pmaze->m_blocks + pblock->m_pos.x) + pblock->m_pos.y + 1);
+			}
+				
 
 		}
 
 	}
-	else if (!pblock->m_left) {
+	else if (!(*pblock)->m_down) {
 
-		pblock->m_left = TRUE;
+		(*pblock)->m_down = TRUE;
 
-		if (pblock->m_pos.x > 0) {
+		if ((*pblock)->m_pos.x < 9) {
 
-			if (!(*(pmaze->m_blocks + pblock->m_pos.x - 1) + pblock->m_pos.y)->m_flag)
-				pblock = (*(pmaze->m_blocks + pblock->m_pos.x - 1) + pblock->m_pos.y);
+			if (!(*(pmaze->m_blocks + (*pblock)->m_pos.x + 1) + (*pblock)->m_pos.y)->m_flag) {
+
+				(*pblock) = (*(pmaze->m_blocks + (*pblock)->m_pos.x + 1) + (*pblock)->m_pos.y);
+
+				(*pblock)->m_flag = TRUE;
+
+			}
+				
+
+		}
+
+	}
+	else if (!(*pblock)->m_left) {
+
+		(*pblock)->m_left = TRUE;
+
+		if ((*pblock)->m_pos.y > 0) {
+
+			if (!(*(pmaze->m_blocks + (*pblock)->m_pos.x) + (*pblock)->m_pos.y - 1)->m_flag) {
+
+				(*pblock) = (*(pmaze->m_blocks + (*pblock)->m_pos.x) + (*pblock)->m_pos.y - 1);
+
+				(*pblock)->m_flag = TRUE;
+
+			}
+				
 
 		}
 
 	}
 	else {
 
-		pblock->m_over = FALSE;
+		(*pblock)->m_over = TRUE;
 
 	}
 
