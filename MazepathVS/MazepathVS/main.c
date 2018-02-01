@@ -144,13 +144,13 @@ MazePath(PMAZE pmaze, POINT start, POINT ending) {
 
 	do {
 
-		if (curpos->m_pass) {
+		if (curpos->m_pass && !curpos->m_over) {
 
 			if (!curpos->m_flag) {
 
 				curpos->m_flag = TRUE;
 
-				Push(buffer, curpos, sizeof(PBLOCK));
+				Push(buffer, &curpos, sizeof(PBLOCK));
 
 			}
 
@@ -169,14 +169,14 @@ MazePath(PMAZE pmaze, POINT start, POINT ending) {
 
 			if (!StackEmpty(buffer) && curpos->m_over) { // 若栈不空，且栈顶四周已探索完毕
 
-				Pop(buffer, curpos, sizeof(PBLOCK));
+				Pop(buffer, &curpos, sizeof(PBLOCK));
 
-				GetTop(buffer, curpos, sizeof(PBLOCK));
+				GetTop(buffer, &curpos, sizeof(PBLOCK));
 
 			}
 			if(!curpos->m_pass){
 
-				GetTop(buffer, curpos, sizeof(PBLOCK));
+				GetTop(buffer, &curpos, sizeof(PBLOCK));
 
 			}
 
@@ -187,6 +187,7 @@ MazePath(PMAZE pmaze, POINT start, POINT ending) {
 	if (bingo) {
 
 		printf("成功到达终点~\n");
+		DrawRoute(buffer);
 
 	}
 	else {
@@ -215,7 +216,8 @@ NextPos(PBLOCK * pblock, PMAZE pmaze) {
 
 				(*pblock) = (*(pmaze->m_blocks + (*pblock)->m_pos.x - 1) + (*pblock)->m_pos.y);
 
-				(*pblock)->m_flag = TRUE;
+				if(!(*pblock)->m_pass)
+					(*pblock)->m_flag = TRUE;
 
 			}
 				
@@ -231,9 +233,10 @@ NextPos(PBLOCK * pblock, PMAZE pmaze) {
 
 			if (!(*(pmaze->m_blocks + (*pblock)->m_pos.x) + (*pblock)->m_pos.y + 1)->m_flag) {
 
-				(*pblock) = (*(pmaze->m_blocks + (*pblock)->m_pos.x + 1) + (*pblock)->m_pos.y + 1);
+				(*pblock) = (*(pmaze->m_blocks + (*pblock)->m_pos.x) + (*pblock)->m_pos.y + 1);
 
-				(*pblock)->m_flag = TRUE;
+				if (!(*pblock)->m_pass)
+					(*pblock)->m_flag = TRUE;
 
 
 			}
@@ -252,7 +255,8 @@ NextPos(PBLOCK * pblock, PMAZE pmaze) {
 
 				(*pblock) = (*(pmaze->m_blocks + (*pblock)->m_pos.x + 1) + (*pblock)->m_pos.y);
 
-				(*pblock)->m_flag = TRUE;
+				if (!(*pblock)->m_pass)
+					(*pblock)->m_flag = TRUE;
 
 			}
 				
@@ -270,7 +274,8 @@ NextPos(PBLOCK * pblock, PMAZE pmaze) {
 
 				(*pblock) = (*(pmaze->m_blocks + (*pblock)->m_pos.x) + (*pblock)->m_pos.y - 1);
 
-				(*pblock)->m_flag = TRUE;
+				if (!(*pblock)->m_pass)
+					(*pblock)->m_flag = TRUE;
 
 			}
 				
@@ -285,5 +290,33 @@ NextPos(PBLOCK * pblock, PMAZE pmaze) {
 	}
 
 	return 0;
+
+}
+
+int
+DrawRoute(PSTACK * pstack) {
+
+	assert(pstack != NULL);
+
+	PSTACK buffer = InitStack(sizeof(PBLOCK));
+
+	PBLOCK tmp = NULL;
+
+	while (!StackEmpty(pstack)) {
+
+		Pop(pstack, &tmp, sizeof(PBLOCK));
+		Push(buffer, &tmp, sizeof(PBLOCK));
+
+	}
+
+	while (!StackEmpty(buffer)) {
+
+		Pop(buffer, &tmp, sizeof(PBLOCK));
+
+		printf("( %d , %d )\t", tmp->m_pos.x, tmp->m_pos.y);
+
+	}
+
+	return 1;
 
 }

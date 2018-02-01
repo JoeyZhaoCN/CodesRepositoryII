@@ -46,6 +46,7 @@ typedef struct  {
 }MAZE, * PMAZE;
 
 
+
 /*
 +
 -			函数前向声明
@@ -63,6 +64,9 @@ MazePath(PMAZE, POINT, POINT);
 
 int
 NextPos(PBLOCK *, PMAZE);
+
+int
+DrawRoute(PSTACK);
 
 #ifdef __cplusplus
 }
