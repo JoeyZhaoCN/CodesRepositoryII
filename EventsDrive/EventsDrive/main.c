@@ -7,6 +7,14 @@ HWND          g_hwnd;
 WPARAM        g_wparam;
 LPARAM        g_lparam;
 
+HWND     hStartButton;
+HWND     hExitButton;
+HWND     hRegistButton;
+HWND     hWnd1;
+HWND     hWnd2;
+HWND     hWnd3;
+HWND     hWnd4;
+
 // Program entry
 int WINAPI 
 WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
@@ -15,7 +23,7 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShow
 	// 全局变量 g_hinstance赋值
 	g_hinstance = hInstance;
 
-	static char szWndClassName[] = TEXT("hellowin");
+	static char szWndClassName[] = TEXT("BankWin");
 
 	HWND       hwnd;
 	MSG        msg;
@@ -49,7 +57,7 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShow
 	hwnd = CreateWindowEx(
 		NULL,
 		szWndClassName,	
-		TEXT("T3D"),
+		TEXT("Bank System"),
 		WS_OVERLAPPEDWINDOW | WS_VISIBLE,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
@@ -96,18 +104,59 @@ WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
 	// 全局变量 g_wparam, g_lparam赋值
 	g_wparam = wparam;
 	g_lparam = lparam;
+	g_hwnd   = hwnd;
+
+	static PSYS pSys;
 
 	switch (message) {
 
 	case WM_CREATE: {
 
+		InitButton();
 
+		pSys = NULL;
 
 	} break;
 
 	case WM_PAINT: {
 
 
+
+	} break;
+
+	case WM_COMMAND: {
+
+		int wmID, wmEV;
+
+		wmID = LOWORD(wparam);
+		wmEV = HIWORD(wparam);
+
+		switch (wmID) {
+
+		case IDC_STARTBUTTON: {
+
+			if (pSys == NULL) {
+
+				pSys = InitSystem();
+				MessageBox(hwnd, TEXT("成功启动系统~"), TEXT("通知"), MB_OK);
+
+			}
+			else {
+
+				MessageBox(hwnd, TEXT("系统运行中，请勿重复操作~"), TEXT("错误"), MB_OK);
+
+			}
+
+		} break;
+
+		case IDC_EXITBUTTON: {
+
+			CloseSystem(pSys);
+			MessageBox(hwnd, TEXT("成功关闭系统~"), TEXT("通知"), MB_OK);
+
+		} break;
+
+		}
 
 	} break;
 
@@ -120,5 +169,117 @@ WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
 	}
 
 	return DefWindowProc(hwnd, message, wparam, lparam);
+
+}
+
+
+void
+InitButton() {
+
+	hStartButton = CreateWindow(
+		TEXT("button"),
+		TEXT("开始营业"),
+		WS_CHILD | WS_VISIBLE,
+		20, 20, 100, 40,
+		g_hwnd,
+		IDC_STARTBUTTON,
+		g_hinstance,
+		NULL
+	);
+
+	hExitButton = CreateWindow(
+		TEXT("button"),
+		TEXT("结束营业"),
+		WS_CHILD | WS_VISIBLE,
+		20, 80, 100, 40,
+		g_hwnd,
+		IDC_EXITBUTTON,
+		g_hinstance,
+		NULL
+	);
+
+	hRegistButton = CreateWindow(
+		TEXT("button"),
+		TEXT("顾客挂号"),
+		WS_CHILD | WS_VISIBLE,
+		300, 20, 100, 40,
+		g_hwnd,
+		IDC_REGISTBUTTON,
+		g_hinstance,
+		NULL
+	);
+
+	hWnd1 = CreateWindow(
+		TEXT("button"),
+		TEXT("一号窗口完成业务"),
+		WS_CHILD | WS_VISIBLE,
+		20, 200, 160, 40,
+		g_hwnd,
+		IDC_WND_1,
+		g_hinstance,
+		NULL
+	);
+
+	hWnd2 = CreateWindow(
+		TEXT("button"),
+		TEXT("二号窗口完成业务"),
+		WS_CHILD | WS_VISIBLE,
+		20, 270, 160, 40,
+		g_hwnd,
+		IDC_WND_2,
+		g_hinstance,
+		NULL
+	);
+
+	hWnd3 = CreateWindow(
+		TEXT("button"),
+		TEXT("三号窗口完成业务"),
+		WS_CHILD | WS_VISIBLE,
+		20, 340, 160, 40,
+		g_hwnd,
+		IDC_WND_3,
+		g_hinstance,
+		NULL
+	);
+
+	hWnd4 = CreateWindow(
+		TEXT("button"),
+		TEXT("四号窗口完成业务"),
+		WS_CHILD | WS_VISIBLE,
+		20, 410, 160, 40,
+		g_hwnd,
+		IDC_WND_4,
+		g_hinstance,
+		NULL
+	);
+
+}
+
+
+PSYS
+InitSystem() {
+
+	PSYS pSys = (PSYS)malloc(sizeof(SYSTEM));
+	if (!pSys)
+		exit(OVERFLOW);
+
+	pSys->m_cnt      = 0;
+	pSys->m_evQuene  = InitQuene();
+	pSys->m_runState = TRUE;
+
+	return pSys;
+
+}
+
+
+void
+CloseSystem(PSYS pSys) {
+
+	assert(pSys != NULL);
+
+	DestroyQuene(pSys->m_evQuene);
+
+	free(pSys);
+	pSys = NULL;
 
 }
