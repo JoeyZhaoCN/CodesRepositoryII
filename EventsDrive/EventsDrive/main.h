@@ -77,6 +77,9 @@ InitSystem();
 void
 CloseSystem(PSYS);
 
+PEVENT
+NewEvent(EVENT_TYPE, PSYS);
+
 #ifdef __cplusplus
 }
 #endif

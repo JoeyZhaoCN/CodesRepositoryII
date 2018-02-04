@@ -152,7 +152,15 @@ WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
 		case IDC_EXITBUTTON: {
 
 			CloseSystem(pSys);
+			pSys = NULL;
+
 			MessageBox(hwnd, TEXT("成功关闭系统~"), TEXT("通知"), MB_OK);
+
+		} break;
+
+		case IDC_REGISTBUTTON: {
+
+
 
 		} break;
 
@@ -281,5 +289,24 @@ CloseSystem(PSYS pSys) {
 
 	free(pSys);
 	pSys = NULL;
+
+}
+
+
+PEVENT
+NewEvent(EVENT_TYPE eventType, PSYS pSys) {
+
+	assert(pSys != NULL);
+
+	PEVENT pEvent = (PEVENT)malloc(sizeof(EVENT));
+	if (!pEvent)
+		exit(OVERFLOW);
+
+	pEvent->m_eventType = eventType;
+
+	pSys->m_cnt++;
+	pEvent->m_idReg = pSys->m_cnt;
+
+	return pEvent;
 
 }
