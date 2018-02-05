@@ -138,7 +138,10 @@ WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
 			if (pSys == NULL) {
 
 				pSys = InitSystem();
+
 				MessageBox(hwnd, TEXT("成功启动系统~"), TEXT("通知"), MB_OK);
+				
+				SetTimer(hwnd, ID_TIMER, 1000, NULL);
 
 			}
 			else {
@@ -156,11 +159,24 @@ WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
 
 			MessageBox(hwnd, TEXT("成功关闭系统~"), TEXT("通知"), MB_OK);
 
+			KillTimer(hwnd, ID_TIMER);
+
 		} break;
 
 		case IDC_REGISTBUTTON: {
 
+			if (isSystemRun(pSys)) {
 
+				PEVENT newEv = NewEvent(regist, pSys);
+
+				EnQuene(pSys->m_evQuene, &newEv, sizeof(PEVENT));
+
+			}
+			else {
+
+				MessageBox(hwnd, TEXT("系统尚未运行~"), TEXT("通知"), MB_OK);
+
+			}
 
 		} break;
 
@@ -273,7 +289,6 @@ InitSystem() {
 
 	pSys->m_cnt      = 0;
 	pSys->m_evQuene  = InitQuene();
-	pSys->m_runState = TRUE;
 
 	return pSys;
 
@@ -289,6 +304,17 @@ CloseSystem(PSYS pSys) {
 
 	free(pSys);
 	pSys = NULL;
+
+}
+
+
+BOOL
+isSystemRun(PSYS pSys) {
+
+	if (pSys == NULL)
+		return FALSE;
+
+	return TRUE;
 
 }
 

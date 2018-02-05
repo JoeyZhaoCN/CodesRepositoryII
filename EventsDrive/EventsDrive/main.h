@@ -44,9 +44,9 @@ typedef enum {
 
 typedef struct {
 
+// private:
 	int    m_cnt;     // 当前挂号的总数
 	PQUENE m_evQuene; // 事件队列
-	BOOL   m_runState;// 系统运行状态
 
 } SYSTEM, * PSYS;
 
@@ -76,6 +76,9 @@ InitSystem();
 
 void
 CloseSystem(PSYS);
+
+BOOL
+isSystemRun(PSYS);
 
 PEVENT
 NewEvent(EVENT_TYPE, PSYS);
