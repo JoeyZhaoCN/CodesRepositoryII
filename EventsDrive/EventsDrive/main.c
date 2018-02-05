@@ -446,7 +446,7 @@ NextClient(PBWINDOW * pBwnds, PSYS pSys) {
 
 			(*(pBwnds + i))->m_workState = TRUE;
 
-			DeQuene(pSys->m_evQuene, (void *)(*(pBwnds + i))->m_curEv, sizeof(PEVENT));
+			DeQuene(pSys->m_evQuene, &((*(pBwnds + i))->m_curEv), sizeof(PEVENT));
 
 			if ((*(pBwnds + i))->m_curEv == NULL)
 				exit(-2);
