@@ -106,7 +106,8 @@ WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
 	g_lparam = lparam;
 	g_hwnd   = hwnd;
 
-	static PSYS pSys;
+	static PSYS     pSys;
+	static PBWINDOW pWnd[4];
 
 	switch (message) {
 
@@ -120,7 +121,8 @@ WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
 
 	case WM_PAINT: {
 
-
+		if(isSystemRun(pSys))
+			TextScreen(pSys, hwnd);
 
 	} break;
 
@@ -139,9 +141,17 @@ WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
 
 				pSys = InitSystem();
 
+				for (int i = 0; i < 4; i++) {
+
+					pWnd[i] = InitBwindow();
+
+				}
+
 				MessageBox(hwnd, TEXT("成功启动系统~"), TEXT("通知"), MB_OK);
 				
 				SetTimer(hwnd, ID_TIMER, 1000, NULL);
+
+				InvalidateRect(hwnd, NULL, TRUE);
 
 			}
 			else {
@@ -157,9 +167,18 @@ WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
 			CloseSystem(pSys);
 			pSys = NULL;
 
+			for (int i = 0; i < 4; i++) {
+
+				FreeBwindow(pWnd[i]);
+				pWnd[i] = NULL;
+
+			}
+
 			MessageBox(hwnd, TEXT("成功关闭系统~"), TEXT("通知"), MB_OK);
 
 			KillTimer(hwnd, ID_TIMER);
+
+			InvalidateRect(hwnd, NULL, TRUE);
 
 		} break;
 
@@ -171,6 +190,8 @@ WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
 
 				EnQuene(pSys->m_evQuene, &newEv, sizeof(PEVENT));
 
+				InvalidateRect(hwnd, NULL, TRUE);
+
 			}
 			else {
 
@@ -181,6 +202,13 @@ WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) {
 		} break;
 
 		}
+
+	} break;
+
+	case WM_TIMER: {
+
+		if(isSystemRun(pSys))
+			NextClient(pWnd, pSys);
 
 	} break;
 
@@ -319,6 +347,33 @@ isSystemRun(PSYS pSys) {
 }
 
 
+void
+TextScreen(PSYS pSys, HWND hwnd) {
+
+	assert(pSys != NULL);
+	assert(hwnd != NULL);
+
+	PAINTSTRUCT ps;
+	char        buf[50];
+
+	HDC hdc = BeginPaint(hwnd, &ps);
+
+	TextOut(hdc, 300, 100, TEXT("系统正在运行"), 12);
+
+	sprintf_s(buf, 50, "目前有%d人正在排队", pSys->m_cnt);
+
+	if(pSys->m_cnt < 10)
+		TextOut(hdc, 300, 150, buf, 17);
+	else if(pSys->m_cnt < 100)
+		TextOut(hdc, 300, 150, buf, 18);
+	else if(pSys->m_cnt < 1000)
+		TextOut(hdc, 300, 150, buf, 19);
+
+	EndPaint(hwnd, &ps);
+
+}
+
+
 PEVENT
 NewEvent(EVENT_TYPE eventType, PSYS pSys) {
 
@@ -334,5 +389,85 @@ NewEvent(EVENT_TYPE eventType, PSYS pSys) {
 	pEvent->m_idReg = pSys->m_cnt;
 
 	return pEvent;
+
+}
+
+
+void
+FreeEvent(PEVENT pEvent) {
+
+	assert(pEvent != NULL);
+
+	free(pEvent);
+	pEvent = NULL;
+
+}
+
+
+PBWINDOW
+InitBwindow() {
+
+	PBWINDOW pBwnd = (PBWINDOW)malloc(sizeof(BWINDOW));
+	if (!pBwnd)
+		exit(OVERFLOW);
+
+	pBwnd->m_workState = FALSE;
+	pBwnd->m_curEv     = NULL;
+
+	return pBwnd;
+
+}
+
+
+void
+FreeBwindow(PBWINDOW pBwnd) {
+
+	assert(pBwnd != NULL);
+
+	FreeEvent(pBwnd->m_curEv);
+
+	free(pBwnd);
+
+}
+
+
+void
+NextClient(PBWINDOW * pBwnds, PSYS pSys) {
+
+	assert(pBwnds != NULL);
+	assert(pSys != NULL);
+
+	for (int i = 0; i < 4; i++) {
+
+		/*if (pSys->m_cnt == 0)
+			break;*/
+
+		if (isWindowFree(*(pBwnds + i))) {
+
+			(*(pBwnds + i))->m_workState = TRUE;
+
+			DeQuene(pSys->m_evQuene, (void *)(*(pBwnds + i))->m_curEv, sizeof(PEVENT));
+
+			if ((*(pBwnds + i))->m_curEv == NULL)
+				exit(-2);
+
+			pSys->m_cnt--;
+
+		}
+
+	}
+
+}
+
+
+BOOL
+isWindowFree(PBWINDOW pBwnd) {
+
+	assert(pBwnd != NULL);
+
+	if (pBwnd->m_workState)
+		return FALSE;
+
+	return TRUE;
 
 }

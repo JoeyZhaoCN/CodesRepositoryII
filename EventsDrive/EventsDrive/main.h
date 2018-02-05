@@ -25,6 +25,7 @@ extern "C" {
 */
 #include <windows.h>
 #include "dtastc.h"
+#include <stdio.h>
 
 
 /*
@@ -53,10 +54,17 @@ typedef struct {
 typedef struct {
 	
 	EVENT_TYPE m_eventType;
-
 	int        m_idReg;
 
 }EVENT, * PEVENT;
+
+typedef struct {
+	
+	BOOL    m_workState;
+	PEVENT  m_curEv;
+
+}BWINDOW, * PBWINDOW;
+
 
 
 /*
@@ -80,8 +88,26 @@ CloseSystem(PSYS);
 BOOL
 isSystemRun(PSYS);
 
+void
+TextScreen(PSYS, HWND);
+
 PEVENT
 NewEvent(EVENT_TYPE, PSYS);
+
+void
+FreeEvent(PEVENT);
+
+PBWINDOW
+InitBwindow();
+
+void
+FreeBwindow(PBWINDOW);
+
+void
+NextClient(PBWINDOW *, PSYS);
+
+BOOL
+isWindowFree(PBWINDOW);
 
 #ifdef __cplusplus
 }
